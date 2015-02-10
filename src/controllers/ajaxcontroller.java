@@ -63,6 +63,22 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("exists",
 					BeanUser.mailExists(request.getParameter("data")));
 			break;
+		case "login":
+			// Si hem arribat fins aqui, donem per bona la petició AJAX
+			result.addPair("success", true);
+			// Comprovem si el mail donat ja està registrat
+//			for(request.getParameterMap().keySet()
+			for(String[] string : request.getParameterMap().values()){
+				System.out.println(string);
+			}
+//			System.out.println(request.getParameterMap().values());
+			result.addPair("exists",
+					BeanUser.mailExists(request.getParameter("mail")));
+//			result.addPair(
+//					"login",
+//					BeanUser.userLogin(request.getParameter("mail"),
+//							request.getParameter("password")));
+			break;
 		default:
 		}
 		// Escrivim en la resposta les dades en format JSON

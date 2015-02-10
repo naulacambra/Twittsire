@@ -26,7 +26,7 @@
 			user = new BeanUser();
 		}
 	%>
-	<form action="/epaw_p2/formcontroller" method="post" id=registerForm>
+	<form action="/epaw_p3/formcontroller" method="post" id=registerForm>
 		<table>
 			<tr>
 				<td>Name</td>

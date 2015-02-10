@@ -128,7 +128,7 @@ public class BeanUser {
 				database = new DAO();
 			} catch (Exception e) {
 				e.printStackTrace();
-				return true;
+				return false;
 			}
 
 		try {
@@ -146,11 +146,11 @@ public class BeanUser {
 					// Si no, retornem que no està registrat
 					return false;
 			else
-				return true;
+				return false;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return true;
+			return false;
 		}
 	}
 
@@ -213,6 +213,40 @@ public class BeanUser {
 					+ "', '" + mail + "', '" + pwd + "');");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static boolean userLogin(String mail, String password) {
+		// Comprovem si ja hem definit la base de dades
+		if (database == null)
+			try {
+				// En cas de que no ho haguem fet, la instanciem
+				database = new DAO();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return true;
+			}
+
+		try {
+			// Fem la consulta a la base de dades
+			ResultSet result = database
+					.executeSQL("SELECT count(*) as count FROM Users WHERE mail = '"
+							+ mail + "' AND pwd = '" + Encryption.MD5(password) + "'");
+			// Movem el cursor a la primera posició del resultat
+			// mes gran que 0
+			if (result.first())
+				if (result.getInt("count") > 0)
+					// Si ho és retornem que si que existeix aquest nom d'usuari
+					return true;
+				else
+					// Si no, retornem que no està registrat
+					return false;
+			else
+				return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return true;
 		}
 	}
 }
