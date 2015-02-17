@@ -1,6 +1,4 @@
 # Twittsire
-Final EPAW Project
+PRÀCTICA 3 (gestió de la sessió)
 
-
-branch Marc:
 el fitxer SQL és el que va crear la ROUS per la P1
