@@ -4,10 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Index page</title>
+<title>Twittsire</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
+<script type="text/javascript" src="js/form.js"></script>
+<script type="text/javascript" src="js/content.js"></script>
 </head>
 <body>
-<a href="login.jsp">LOGIN</a>
-<a href="form.jsp">REGISTER</a>
-</body>
-</html>
+<jsp:include page="header.jsp" />
+<jsp:include page="content.jsp" />
+<jsp:include page="footer.jsp" />
