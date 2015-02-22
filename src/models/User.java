@@ -7,17 +7,32 @@ import java.util.ArrayList;
 import utils.DAO;
 import utils.Encryption;
 
-public class BeanUser {
+public class User {
 
 	// Definim les variables que contindrà l'usuari i que s'hauran d'omplir
 	private String name = "";
 	private String surname = "";
 	private String username = "";
 	private String mail = "";
-	private String pwd = "";
+	private String password = "";
+	private int idRole = -1;
 	private int[] error = { 0, 0 };
+	public String[] definition = {"name", "surname", "username", "mail", "password", "idRole"};
 	// Definim un DAO per poder fer consultes a la base de dades
 	private static DAO database = null;
+
+	public User() {
+	}
+
+	public User(String name, String surname, String username, String mail,
+			String password) {
+		this.name = name;
+		this.surname = surname;
+		this.username = username;
+		this.mail = mail;
+		this.password = password;
+		this.idRole = 2;
+	}
 
 	/* Getters */
 	public String getName() {
@@ -36,8 +51,12 @@ public class BeanUser {
 		return mail;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
+	}
+	
+	public int getIdRole() {
+		return idRole;
 	}
 
 	public int[] getError() {
@@ -61,8 +80,8 @@ public class BeanUser {
 		this.mail = mail;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = Encryption.MD5(pwd);
+	public void setPassword(String password) {
+		this.password = Encryption.MD5(password);
 	}
 
 	/* Logic Functions */
@@ -70,7 +89,7 @@ public class BeanUser {
 	// la base de dades
 	public boolean isComplete() {
 		return (hasValue(getUsername()) && hasValue(getMail())
-				&& hasValue(getName()) && hasValue(getSurname()) && hasValue(getPwd()));
+				&& hasValue(getName()) && hasValue(getSurname()) && hasValue(getPassword()));
 	}
 
 	// Funció auxiliar per comprovar si un camp té valor
@@ -80,7 +99,7 @@ public class BeanUser {
 
 	public String toString() {
 		return this.name + " " + this.surname + " " + this.username + " "
-				+ this.mail + " " + this.pwd;
+				+ this.mail + " " + this.password;
 	}
 
 	// Funció per comprovar si un nom d'usuari està registrat a la base de dades
@@ -155,9 +174,9 @@ public class BeanUser {
 	}
 
 	// Funció per retornar tots els usuaris registrats
-	public static ArrayList<BeanUser> getUsers() {
+	public static ArrayList<User> getUsers() {
 		// Creem un ArrayList de BeanUsers inicialment buit
-		ArrayList<BeanUser> users = new ArrayList<BeanUser>();
+		ArrayList<User> users = new ArrayList<User>();
 		// Comprovem si ja hem definit la base de dades
 		if (database == null)
 			try {
@@ -173,12 +192,15 @@ public class BeanUser {
 			// Recorrem l'array
 			while (result.next()) {
 				// Creem un nou BeanUser i li omplim les dades
-				BeanUser tempUser = new BeanUser();
-				tempUser.setName(result.getString("name"));
-				tempUser.setSurname(result.getString("surname"));
-				tempUser.setUsername(result.getString("username"));
-				tempUser.setMail(result.getString("mail"));
-				tempUser.setPwd(result.getString("pwd"));
+				User tempUser = new User(result.getString("name"),
+						result.getString("surname"),
+						result.getString("username"), result.getString("mail"),
+						result.getString("password"));
+				// tempUser.setName(result.getString("name"));
+				// tempUser.setSurname(result.getString("surname"));
+				// tempUser.setUsername(result.getString("username"));
+				// tempUser.setMail(result.getString("mail"));
+				// tempUser.setpassword(result.getString("password"));
 				// Afegim l'usuari a l'ArrayList
 				users.add(tempUser);
 			}
@@ -203,14 +225,14 @@ public class BeanUser {
 
 		try {
 			// Generem la query per guardar l'usuari
-			database.executeInsertSQL("INSERT INTO Users (`name`, surname, username, mail, pwd) "
+			database.executeInsertSQL("INSERT INTO Users (`name`, surname, username, mail, password) "
 					+ "VALUES ('"
 					+ name
 					+ "', '"
 					+ surname
 					+ "', '"
 					+ username
-					+ "', '" + mail + "', '" + pwd + "');");
+					+ "', '" + mail + "', '" + password + "');");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -231,7 +253,9 @@ public class BeanUser {
 			// Fem la consulta a la base de dades
 			ResultSet result = database
 					.executeSQL("SELECT count(*) as count FROM Users WHERE mail = '"
-							+ mail + "' AND pwd = '" + Encryption.MD5(password) + "'");
+							+ mail
+							+ "' AND password = '"
+							+ Encryption.MD5(password) + "'");
 			// Movem el cursor a la primera posició del resultat
 			// mes gran que 0
 			if (result.first())

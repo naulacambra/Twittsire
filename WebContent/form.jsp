@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="models.BeanUser"%>
+<%@ page import="models.User"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,14 +19,14 @@
 </head>
 <body>
 	<%
-		BeanUser user = null;
-		if (request.getAttribute("username") != null) {
-			user = (BeanUser) request.getAttribute("username");
-		} else {
-			user = new BeanUser();
-		}
+		User user = null;
+			if (request.getAttribute("username") != null) {
+		user = (User) request.getAttribute("username");
+			} else {
+		user = new User();
+			}
 	%>
-	<form action="/epaw_p3/formcontroller" method="post" id=registerForm>
+	<form action="/Twittsire/formcontroller" method="post" id=registerForm>
 		<table>
 			<tr>
 				<td>Name</td>

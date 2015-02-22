@@ -3,8 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import models.BeanUser;
+import models.User;
 import utils.BeanUtilities;
+import utils.DAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,7 +27,6 @@ public class formcontroller extends HttpServlet {
 	 */
 	public formcontroller() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class formcontroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		//Si rebem una petició GET la processem com si fos POST
+		// Si rebem una petició GET la processem com si fos POST
 		doPost(request, response);
 	}
 
@@ -49,27 +49,27 @@ public class formcontroller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		//Creem un usuari per poder gestionar la petició
-		BeanUser user = new BeanUser();
-		//Intentem omplir-lo amb les dades que ens arriben en la petició
+		// Creem un usuari per poder gestionar la petició
+		User user = new User();
+		// Intentem omplir-lo amb les dades que ens arriben en la petició
 		BeanUtilities.populateBean(user, request);
 		if (user.isComplete()) {
-			//Si l'usuari té totes les dades el guardem
+			// Si l'usuari té totes les dades el guardem
 			user.saveUser();
-			//Generem un ArrayList amb els usuaris guardats
-			ArrayList<BeanUser> users = BeanUser.getUsers();
-			//Enviem aquest ArrayList amb la resposta al JSP
+			// Generem un ArrayList amb els usuaris guardats
+			ArrayList<User> users = User.getUsers();
+			// Enviem aquest ArrayList amb la resposta al JSP
 			request.setAttribute("users", users);
-			//Cridem al JSP list.jsp per mostrar la llista d'usuaris
+			// Cridem al JSP list.jsp per mostrar la llista d'usuaris
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/list.jsp");
 			if (dispatcher != null)
 				dispatcher.forward(request, response);
 		} else {
-			//Si l'usuari no està complet, el retornem al formulari inicial
+			// Si l'usuari no està complet, el retornem al formulari inicial
 			request.setAttribute("user", user);
-			//Cridem al JSP form.jsp per tornar a mostrar el formulari
-			//o mostrar-lo per primera vegada
+			// Cridem al JSP form.jsp per tornar a mostrar el formulari
+			// o mostrar-lo per primera vegada
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/form.jsp");
 			if (dispatcher != null)

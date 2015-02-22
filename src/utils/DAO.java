@@ -1,6 +1,8 @@
 package utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.Arrays;
 
 //Classe per poder fer les consultes a la base de dades
 public class DAO {
@@ -34,7 +36,55 @@ public class DAO {
 		statement.execute(query);
 	}
 
-	// TODO: code for updates for Assignments 2, 3 and 4.
+	public boolean saveObject(Object o) {
+		Class<?> clazz;
+		String[] definition, values;
+		String query = "";
+		try {
+			clazz = Class.forName(o.getClass().getName());
+			definition = ((String[]) (clazz.getField("definition").get(o)));
+			values = new String[definition.length];
+			query = "INSERT INTO "
+					+ o.getClass().getSimpleName()
+					+ "("
+					+ StringManager.removeFirstAndLast(Arrays
+							.asList(definition).toString()) + ") VALUES (";
+			for (int i = 0; i < definition.length; i++) {
+				switch (clazz
+						.getMethod(
+								"get" + StringManager.capitalize(definition[i]))
+						.getReturnType().getSimpleName()) {
+				case "int":
+					values[i] = clazz
+							.getMethod(
+									"get"
+											+ StringManager
+													.capitalize(definition[i]))
+							.invoke(o).toString();
+					break;
+				case "String":
+				default:
+					values[i] = "\""
+							+ clazz.getMethod(
+									"get"
+											+ StringManager
+													.capitalize(definition[i]))
+									.invoke(o).toString() + "\"";
+				}
+			}
+			query += StringManager.removeFirstAndLast(Arrays.asList(values)
+					.toString()) + ")";
+			executeInsertSQL(query);
+			return true;
+		} catch (ClassNotFoundException | NoSuchFieldException
+				| SecurityException | IllegalArgumentException
+				| IllegalAccessException | InvocationTargetException
+				| NoSuchMethodException | SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public void disconnectBD() throws SQLException {
 		statement.close();
 		connection.close();

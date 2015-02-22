@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.BeanUser;
+import models.User;
 import utils.JSON;
 
 /**
@@ -53,7 +53,7 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("success", true);
 			// Comprovem si el nom d'usuari donat existeix
 			result.addPair("exists",
-					BeanUser.usernameExists(request.getParameter("data")));
+					User.usernameExists(request.getParameter("data")));
 			break;
 		// Comprovar si ja existeix un mail
 		case "checkMail":
@@ -61,23 +61,22 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("success", true);
 			// Comprovem si el mail donat ja està registrat
 			result.addPair("exists",
-					BeanUser.mailExists(request.getParameter("data")));
+					User.mailExists(request.getParameter("data")));
 			break;
 		case "login":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
 			// Comprovem si el mail donat ja està registrat
-//			for(request.getParameterMap().keySet()
-			for(String[] string : request.getParameterMap().values()){
+			// for(request.getParameterMap().keySet()
+			for (String[] string : request.getParameterMap().values()) {
 				System.out.println(string);
 			}
-//			System.out.println(request.getParameterMap().values());
 			result.addPair("exists",
-					BeanUser.mailExists(request.getParameter("mail")));
-//			result.addPair(
-//					"login",
-//					BeanUser.userLogin(request.getParameter("mail"),
-//							request.getParameter("password")));
+					User.mailExists(request.getParameter("mail")));
+			// result.addPair(
+			// "login",
+			// BeanUser.userLogin(request.getParameter("mail"),
+			// request.getParameter("password")));
 			break;
 		default:
 		}
