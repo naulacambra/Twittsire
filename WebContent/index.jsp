@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,10 +21,30 @@
 <script type="text/javascript" src="media/js/form.js"></script>
 </head>
 <body>
-<div id="index_load" class="loading col-12"></div>
-<!-- Header -->
-<jsp:include page="header.jsp" />
-<!-- Page content -->
-<jsp:include page="content.jsp" />
-<!-- Footer -->
-<jsp:include page="footer.jsp" />
+	<div id="index_load" class="loading col-12"></div>
+	<div class="row">
+		<div class="col-12">
+			<!-- Header -->
+			<jsp:include page="header.jsp" />
+		</div>
+		<div class="clear"></div>
+		<div class="col-3">
+			<!-- Left sidebar -->
+			<jsp:include page="left_sidebar.jsp" />
+		</div>
+		<div class="col-6">
+			<!-- Page content -->
+			<jsp:include page="content.jsp" />
+		</div>
+		<div class="col-3">
+			<!-- Right sidebar -->
+			<jsp:include page="right_sidebar.jsp" />
+		</div>
+		<div class="clear"></div>
+		<div class="col-12">
+			<!-- Footer -->
+			<jsp:include page="footer.jsp" />
+		</div>
+	</div>
+</body>
+</html>
