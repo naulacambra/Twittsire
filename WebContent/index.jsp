@@ -11,7 +11,6 @@
 <script type="text/javascript" src="js/form.js"></script>
 <script type="text/javascript" src="js/content.js"></script>
 </head>
-<body>
 <jsp:include page="header.jsp" />
 <jsp:include page="content.jsp" />
 <jsp:include page="footer.jsp" />
