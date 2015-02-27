@@ -9,8 +9,8 @@
 <title>Exemple Formulari</title>
 <link rel="stylesheet" type="text/css" href="css/estil.css" />
 <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript" src="js/form.js"></script>
+<script type="text/javascript" src="mediajs/jquery.validate.js"></script>
+<script type="text/javascript" src="media/js/form.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#registerForm").validate();

@@ -1,4 +1,4 @@
-package utils;
+package managers;
 
 public class StringManager {
 	public static String capitalize(String line) {

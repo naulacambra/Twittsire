@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.Arrays;
 
+import managers.StringManager;
+
 //Classe per poder fer les consultes a la base de dades
 public class DAO {
 	private Connection connection;
