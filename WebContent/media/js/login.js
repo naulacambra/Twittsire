@@ -1,52 +1,35 @@
 jQuery(document).ready(function($) {
-	$('#loginForm').submit(function(e) {
+	$('.login_form').submit(function(e) {
 		e.preventDefault();
-		ajaxCall({
-			/* Definim quina acció volem fer en el servlet */
-			action : 'login',
-			/* Enviem el nom d'usuari que ha de comprovar */
-			data : {
-				mail: $('#mail').val(),
-				password: $('#password').val()
-			}
-		}, $('.error_label[for="username"]'), function(response) {
-			response = parseResponse(response);
-			/* Comprovem si la cridada ajax ha anat bé */
-			console.log(response);
-			if (response.success) {
-				if (!response.exists)
-					/*
-					 * Si el nom d'usuari ja està registrat mostrem l'error en
-					 * la vista
-					 */
-					$('.error_label[for="mail"]').show();
-				else{
-//					if(response.login)
-//						window.location.href = "list.jsp";
+		var form = $(this);
+		var container = $(this).parents('.container');
+		$.ajax({
+			url : "ajaxcontroller",
+			type : "POST",
+			dataType : "json",
+			data : $(form).serialize(),
+			success : function(response) {
+				response = parseResponse(response);
+				/* Comprovem si la cridada ajax ha anat bÃ© */
+				if (response.success) {
+					if (response.login) {
+						$(container).load('contentcontroller', {
+							content : $(form).data('content')
+						});
+					}
+				} else {
+					console.warn("Something went wrong");
 				}
-			} else {
-				console.warn("Something went wrong");
+			},
+			error : function(response) {
+				console.log("error");
+				console.log(response.responseText);
 			}
 		});
 	});
 });
 
-/* Funció per facilitar les cridades AJAX */
-function ajaxCall(data, errorElement, successFunction) {
-	$.ajax({
-		url : "ajaxcontroller",
-		type : "POST",
-		dataType : "json",
-		data : data,
-		success : successFunction,
-		error : function(response) {
-			response = response[0];
-			console.log("error");
-			console.log(response);
-		}
-	});
-}
-/* Funció per poder tractar correctament la resposta de les cridades AJAX */
+/* FunciÃ³ per poder tractar correctament la resposta de les cridades AJAX */
 function parseResponse(response) {
 	count = 0;
 	new_response = {};

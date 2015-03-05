@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,15 +12,20 @@
 <link rel="stylesheet" type="text/css" href="media/css/style.css" />
 <!-- JS -->
 <!-- jQuery -->
-<script type="text/javascript" src="medida/js/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="media/js/jquery-1.7.1.js"></script>
 <!-- Validate.js -->
 <script type="text/javascript" src="media/js/jquery.validate.js"></script>
 <!-- Content loader JS -->
 <script type="text/javascript" src="media/js/content.js"></script>
-<!-- Form helper JS -->
-<script type="text/javascript" src="media/js/form.js"></script>
+<!-- Index JS -->
+<script type="text/javascript" src="media/js/index.js"></script>
+<!-- Login helper JS -->
+<script type="text/javascript" src="media/js/login.js"></script>
 </head>
 <body>
+	<%
+		HttpSession session = request.getSession(false);
+	%>
 	<div id="index_load" class="loading col-12"></div>
 	<div class="row">
 		<div class="col-12">

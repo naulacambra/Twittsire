@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
 	$.when(true).done(function() {
 		console.log('Web page loaded!');
+		$('#index_load').remove();
 	});
 	/* Load all initial content */
 	/* Load followers */

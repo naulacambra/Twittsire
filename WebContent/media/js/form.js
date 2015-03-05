@@ -2,17 +2,17 @@ jQuery(document).ready(function($) {
 	/* Quan l'usuari abandona el camp 'username' disparem la cridada AJAX */
 	$('#username').focusout(function() {
 		ajaxCall({
-			/* Definim quina acció volem fer en el servlet */
+			/* Definim quina acciï¿½ volem fer en el servlet */
 			action : 'checkUsername',
 			/* Enviem el nom d'usuari que ha de comprovar */
 			data : $('#username').val()
 		}, $('.error_label[for="username"]'), function(response) {
 			response = parseResponse(response);
-			/* Comprovem si la cridada ajax ha anat bé */
+			/* Comprovem si la cridada ajax ha anat bï¿½ */
 			if (response.success) {
 				if (response.exists)
 					/*
-					 * Si el nom d'usuari ja està registrat mostrem l'error en
+					 * Si el nom d'usuari ja estï¿½ registrat mostrem l'error en
 					 * la vista
 					 */
 					$('.error_label[for="username"]').show();
@@ -24,16 +24,16 @@ jQuery(document).ready(function($) {
 	/* Quan l'usuari abandona el camp 'mail' disparem la cridada AJAX */
 	$('#mail').focusout(function() {
 		ajaxCall({
-			/* Definim quina acció volem fer en el servlet */
+			/* Definim quina acciï¿½ volem fer en el servlet */
 			action : 'checkMail',
 			/* Enviem el mail que ha de comprovar */
 			data : $('#mail').val()
 		}, $('.error_label[for="mail"]'), function(response) {
 			response = parseResponse(response);
-			/* Comprovem si la cridada ajax ha anat bé */
+			/* Comprovem si la cridada ajax ha anat bï¿½ */
 			if (response.success) {
 				if (response.exists)
-					/* Si el mail ja està registrat mostrem l'error en la vista */
+					/* Si el mail ja estï¿½ registrat mostrem l'error en la vista */
 					$('.error_label[for="mail"]').show();
 			} else {
 				console.warn("Something went wrong");
@@ -41,12 +41,12 @@ jQuery(document).ready(function($) {
 		});
 	});
 	/*
-	 * Cada cop que es modifica el camp de 'Repetir password' es comprova si té
+	 * Cada cop que es modifica el camp de 'Repetir password' es comprova si tï¿½
 	 * el mateix valor que el camp 'password'
 	 */
 	$('#pwd_check').keyup(function() {
 		if ($(this).val() != $('#pwd').val())
-			/* Si no té el mateix valor mostrem l'error a la vista */
+			/* Si no tï¿½ el mateix valor mostrem l'error a la vista */
 			$('.error_label[for="pwd_check"]').show();
 		else
 			$('.error_label[for="pwd_check"]').hide();
@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
 	/* !Reset error labels */
 });
 
-/* Funció per facilitar les cridades AJAX */
+/* FunciÃ³ per facilitar les cridades AJAX */
 function ajaxCall(data, errorElement, successFunction) {
 	$.ajax({
 		url : "ajaxcontroller",
@@ -76,7 +76,7 @@ function ajaxCall(data, errorElement, successFunction) {
 		}
 	});
 }
-/* Funció per poder tractar correctament la resposta de les cridades AJAX */
+/* FunciÃ³ per poder tractar correctament la resposta de les cridades AJAX */
 function parseResponse(response) {
 	count = 0;
 	new_response = {};

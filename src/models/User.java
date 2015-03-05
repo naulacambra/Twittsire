@@ -17,7 +17,8 @@ public class User {
 	private String password = "";
 	private int idRole = -1;
 	private int[] error = { 0, 0 };
-	public String[] definition = {"name", "surname", "username", "mail", "password", "idRole"};
+	public String[] definition = { "name", "surname", "username", "mail",
+			"password", "idRole" };
 	// Definim un DAO per poder fer consultes a la base de dades
 	private static DAO database = null;
 
@@ -54,7 +55,7 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public int getIdRole() {
 		return idRole;
 	}
@@ -97,6 +98,25 @@ public class User {
 		return ((val != null) && (!val.equals("")));
 	}
 
+	public boolean loadUser(String parameter, String value) {
+		try {
+			database = new DAO();
+			ResultSet result = database.executeSQL("SELECT * FROM User WHERE "
+					+ parameter + " = '" + value + "'");
+			if (result.first()) {
+				this.setName(result.getString("name"));
+				this.setSurname(result.getString("surname"));
+				this.setUsername(result.getString("username"));
+				this.setMail(result.getString("mail"));
+				return true;
+			} else
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public String toString() {
 		return this.name + " " + this.surname + " " + this.username + " "
 				+ this.mail + " " + this.password;
@@ -117,7 +137,7 @@ public class User {
 		try {
 			// Fem la consulta a la base de dades
 			ResultSet result = database
-					.executeSQL("SELECT count(*) as count FROM Users WHERE username = '"
+					.executeSQL("SELECT count(*) as count FROM User WHERE username = '"
 							+ username + "'");
 			// Movem el cursor a la primera posició del resultat
 			if (result.first())
@@ -153,7 +173,7 @@ public class User {
 		try {
 			// Fem la consulta a la base de dades
 			ResultSet result = database
-					.executeSQL("SELECT count(*) as count FROM Users WHERE mail = '"
+					.executeSQL("SELECT count(*) as count FROM User WHERE mail = '"
 							+ mail + "'");
 			// Movem el cursor a la primera posició del resultat
 			// mes gran que 0
@@ -188,7 +208,7 @@ public class User {
 		try {
 			// Fem la consulta per obtenir tots els usuaris guardats a la base
 			// de dades
-			ResultSet result = database.executeSelectSQL("SELECT * FROM Users");
+			ResultSet result = database.executeSelectSQL("SELECT * FROM User");
 			// Recorrem l'array
 			while (result.next()) {
 				// Creem un nou BeanUser i li omplim les dades
@@ -225,7 +245,7 @@ public class User {
 
 		try {
 			// Generem la query per guardar l'usuari
-			database.executeInsertSQL("INSERT INTO Users (`name`, surname, username, mail, password) "
+			database.executeInsertSQL("INSERT INTO User (`name`, surname, username, mail, password) "
 					+ "VALUES ('"
 					+ name
 					+ "', '"
@@ -238,7 +258,7 @@ public class User {
 		}
 	}
 
-	public static boolean userLogin(String mail, String password) {
+	public static boolean userLoginWithMail(String mail, String password) {
 		// Comprovem si ja hem definit la base de dades
 		if (database == null)
 			try {
@@ -252,8 +272,44 @@ public class User {
 		try {
 			// Fem la consulta a la base de dades
 			ResultSet result = database
-					.executeSQL("SELECT count(*) as count FROM Users WHERE mail = '"
+					.executeSQL("SELECT count(*) as count FROM User WHERE mail = '"
 							+ mail
+							+ "' AND password = '"
+							+ Encryption.MD5(password) + "'");
+			// Movem el cursor a la primera posició del resultat
+			// mes gran que 0
+			if (result.first())
+				if (result.getInt("count") > 0)
+					// Si ho és retornem que si que existeix aquest nom d'usuari
+					return true;
+				else
+					// Si no, retornem que no està registrat
+					return false;
+			else
+				return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return true;
+		}
+	}
+
+	public static boolean userLoginWithUsername(String username, String password) {
+		// Comprovem si ja hem definit la base de dades
+		if (database == null)
+			try {
+				// En cas de que no ho haguem fet, la instanciem
+				database = new DAO();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return true;
+			}
+
+		try {
+			// Fem la consulta a la base de dades
+			ResultSet result = database
+					.executeSQL("SELECT count(*) as count FROM User WHERE username = '"
+							+ username
 							+ "' AND password = '"
 							+ Encryption.MD5(password) + "'");
 			// Movem el cursor a la primera posició del resultat

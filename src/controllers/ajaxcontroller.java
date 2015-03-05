@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.User;
 import utils.JSON;
@@ -67,16 +68,29 @@ public class ajaxcontroller extends HttpServlet {
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
 			// Comprovem si el mail donat ja està registrat
-			// for(request.getParameterMap().keySet()
-			for (String[] string : request.getParameterMap().values()) {
-				System.out.println(string);
+			result.addPair(
+					"login",
+					User.userLoginWithMail(
+							request.getParameter("username_mail"),
+							request.getParameter("password"))
+							|| User.userLoginWithUsername(
+									request.getParameter("username_mail"),
+									request.getParameter("password")));
+			if (Boolean.valueOf(result.getValue("login"))) {
+				User user = new User();
+				if (User.mailExists(request.getParameter("username_mail")))
+					user.loadUser("mail", request.getParameter("username_mail"));
+				else if (User.usernameExists(request
+						.getParameter("username_mail")))
+					user.loadUser("username",
+							request.getParameter("username_mail"));
+				else
+					break;
+
+				HttpSession session = request.getSession();
+				session.setAttribute("user", user);
+				System.out.println("pene" + user.getUsername());
 			}
-			result.addPair("exists",
-					User.mailExists(request.getParameter("mail")));
-			// result.addPair(
-			// "login",
-			// BeanUser.userLogin(request.getParameter("mail"),
-			// request.getParameter("password")));
 			break;
 		default:
 		}

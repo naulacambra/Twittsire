@@ -1,6 +1,6 @@
 <header>
 	<div class="logo col-3">
-		<img src="media/img/logo.png" />
+<!-- 		<img src="media/img/logo.png" /> -->
 	</div>
 	<div class="col-6">
 		<div class="col-4">

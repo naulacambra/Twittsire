@@ -71,7 +71,7 @@ public class formcontroller extends HttpServlet {
 			// Cridem al JSP form.jsp per tornar a mostrar el formulari
 			// o mostrar-lo per primera vegada
 			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/form.jsp");
+					.getRequestDispatcher("/index.jsp");
 			if (dispatcher != null)
 				dispatcher.forward(request, response);
 		}
