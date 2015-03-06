@@ -15,6 +15,8 @@
 <script type="text/javascript" src="media/js/jquery-1.7.1.js"></script>
 <!-- Validate.js -->
 <script type="text/javascript" src="media/js/jquery.validate.js"></script>
+<!-- Utils JS -->
+<script type="text/javascript" src="media/js/utils.js"></script>
 <!-- Content loader JS -->
 <script type="text/javascript" src="media/js/content.js"></script>
 <!-- Index JS -->

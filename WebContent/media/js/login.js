@@ -16,6 +16,8 @@ jQuery(document).ready(function($) {
 						$(container).load('contentcontroller', {
 							content : $(form).data('content')
 						});
+						loadFollowers();
+						loadFollowings();
 					}
 				} else {
 					console.warn("Something went wrong");
@@ -27,17 +29,32 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-});
 
-/* Funció per poder tractar correctament la resposta de les cridades AJAX */
-function parseResponse(response) {
-	count = 0;
-	new_response = {};
-	response.forEach(function(element) {
-		for (key in element) {
-			new_response[key] = response[count][key];
-			++count;
-		}
+	$('.logout').click(function(e) {
+		e.preventDefault();
+		var container = $(this).parents('.container');
+		$.ajax({
+			url : "ajaxcontroller",
+			type : "POST",
+			dataType : "json",
+			data : {
+				action : "logout"
+			},
+			success : function(response) {
+				response = parseResponse(response);
+				/* Comprovem si la cridada ajax ha anat bé */
+				if (response.success) {
+					$(container).load('contentcontroller', {
+						content : 'content/login.jsp'
+					});
+				} else {
+					console.warn("Something went wrong");
+				}
+			},
+			error : function(response) {
+				console.log("error");
+				console.log(response.responseText);
+			}
+		});
 	});
-	return new_response;
-}
+});

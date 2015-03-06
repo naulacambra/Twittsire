@@ -89,8 +89,13 @@ public class ajaxcontroller extends HttpServlet {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				System.out.println("pene" + user.getUsername());
 			}
+			break;
+		case "logout":
+			result.addPair("success", true);
+			System.out.println("logging out!");
+			HttpSession session = request.getSession(false);
+			session.invalidate();
 			break;
 		default:
 		}

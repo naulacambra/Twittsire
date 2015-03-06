@@ -7,4 +7,5 @@
 	<img id="user_avatar" src="" />
 	<span id="user_username"><%=user.getUsername()%></span>
 	<span id="user_mail"><%= user.getMail() %></span>
+	<button class="logout">Logout</button>
 </div>

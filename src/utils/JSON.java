@@ -31,6 +31,13 @@ public class JSON {
 		array.add(obj);
 		map.put(property, String.valueOf(value));
 	}
+	
+	public void addPair(String property, int value) {
+		JsonObject obj = new JsonObject();
+		obj.addProperty(property, value);
+		array.add(obj);
+		map.put(property, String.valueOf(value));
+	}
 
 	public int getArraySize() {
 		return array.size();
