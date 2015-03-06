@@ -64,3 +64,31 @@ function loadFollowings() {
 		}
 	});
 }
+
+function loadTweets() {
+	/* Load tweets */
+	$.ajax({
+		url : "tweetcontroller",
+		type : "POST",
+		dataType : "json",
+		data : {
+			action : 'getTweets',
+			scoope : 'global'
+		},
+		success : function(response) {
+			response = parseResponse(response);
+			if (response.success) {
+				if (response.tweet_count > 0) {
+					$('#content').load('content/tweet_list.jsp');
+				} else {
+					$('#content').load('content/empty_tweets.jsp');
+				}
+			} else {
+				$('#content').html('');
+			}
+		},
+		error : function(response) {
+
+		}
+	});
+}

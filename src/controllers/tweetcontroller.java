@@ -1,11 +1,19 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import models.Follow;
+import models.Tweet;
+import models.User;
+import utils.JSON;
 
 /**
  * Servlet implementation class tweetcontroller
@@ -36,7 +44,31 @@ public class tweetcontroller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		JSON result = new JSON();
+		// Definim les capceleres per definir el format de resposta
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			// Comprovem quina accio s'ens ha demanat amb la variable "action"
+			switch (request.getParameter("action")) {
+			case "getTweets":
+				result.addPair("success", true);
+				switch(request.getParameter("scoope")){
+				case "global": 
+					ArrayList<Tweet> tweets = Tweet.getTweets();
+					result.addPair("tweets_count", tweets.size());
+					session.setAttribute("tweets", tweets);
+					break;
+				}
+				break;
+			}
+		} else {
+			result.addPair("success", false);
+		}
+		// Escrivim en la resposta les dades en format JSON
+		response.getWriter().write(result.toString());
 	}
 
 }
