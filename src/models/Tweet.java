@@ -43,11 +43,10 @@ public class Tweet {
 
 	public static ArrayList<Tweet> getTweets() {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-		System.out.println("tweets count: " + tweets.size());
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN user u ON t.idUser = u.idUser ORDER BY t.created_at DESC'");
+					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));

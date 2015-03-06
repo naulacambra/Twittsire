@@ -1,6 +1,5 @@
 <%@ page import="models.User"%>
 <%
-	session = pageContext.getSession();
 	User user = (User) session.getAttribute("user");
 %>
 <div class="col-12">

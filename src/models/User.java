@@ -16,6 +16,7 @@ public class User {
 	private String mail = "";
 	private String password = "";
 	private int idRole = -1;
+	private int idUser;
 	private int[] error = { 0, 0 };
 	public String[] definition = { "name", "surname", "username", "mail",
 			"password", "idRole" };
@@ -25,8 +26,9 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String surname, String username, String mail,
+	public User(int idUser, String name, String surname, String username, String mail,
 			String password) {
+		this.idUser = idUser;
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
@@ -36,35 +38,43 @@ public class User {
 	}
 
 	/* Getters */
+	public int getIdUser(){
+		return this.idUser;
+	}
+	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getSurname() {
-		return surname;
+		return this.surname;
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public String getMail() {
-		return mail;
+		return this.mail;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public int getIdRole() {
-		return idRole;
+		return this.idRole;
 	}
 
 	public int[] getError() {
-		return error;
+		return this.error;
 	}
 
 	/* Setters */
+	public void setIdUser(int idUser){
+		this.idUser = idUser;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -104,6 +114,7 @@ public class User {
 			ResultSet result = database.executeSQL("SELECT * FROM User WHERE "
 					+ parameter + " = '" + value + "'");
 			if (result.first()) {
+				this.setIdUser(result.getInt("idUser"));
 				this.setName(result.getString("name"));
 				this.setSurname(result.getString("surname"));
 				this.setUsername(result.getString("username"));
@@ -212,7 +223,9 @@ public class User {
 			// Recorrem l'array
 			while (result.next()) {
 				// Creem un nou BeanUser i li omplim les dades
-				User tempUser = new User(result.getString("name"),
+				User tempUser = new User(
+						result.getInt("idUser"),
+						result.getString("name"),
 						result.getString("surname"),
 						result.getString("username"), result.getString("mail"),
 						result.getString("password"));

@@ -23,6 +23,8 @@
 <script type="text/javascript" src="media/js/index.js"></script>
 <!-- Login helper JS -->
 <script type="text/javascript" src="media/js/login.js"></script>
+<!-- Tweet helper JS -->
+<script type="text/javascript" src="media/js/tweet.js"></script>
 </head>
 <body>
 	<%

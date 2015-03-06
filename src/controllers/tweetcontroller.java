@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import models.Follow;
 import models.Tweet;
 import models.User;
+import utils.DAO;
 import utils.JSON;
 
 /**
@@ -49,24 +50,36 @@ public class tweetcontroller extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			// Comprovem quina accio s'ens ha demanat amb la variable "action"
-			switch (request.getParameter("action")) {
-			case "getTweets":
-				result.addPair("success", true);
-				switch(request.getParameter("scoope")){
-				case "global": 
-					ArrayList<Tweet> tweets = Tweet.getTweets();
-					result.addPair("tweets_count", tweets.size());
-					session.setAttribute("tweets", tweets);
-					break;
-				}
+		// Comprovem quina accio s'ens ha demanat amb la variable "action"
+		switch (request.getParameter("action")) {
+		case "getTweets":
+			result.addPair("success", true);
+			switch (request.getParameter("scoope")) {
+			case "global":
+				ArrayList<Tweet> tweets = Tweet.getTweets();
+				result.addPair("tweets_count", tweets.size());
+				session.setAttribute("tweets", tweets);
 				break;
 			}
-		} else {
-			result.addPair("success", false);
+			break;
+		case "createTweet":
+			result.addPair("success", true);
+			Tweet tempTweet = new Tweet(request.getParameter("tweet_text"),
+					((User) session.getAttribute("user")).getIdUser());
+			try {
+				DAO database = new DAO();
+				//Guardem l'objecte Tweet directament a la base de dades
+				database.saveObject(tempTweet);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
 		}
+		// User user = (User) session.getAttribute("user");
+		// if (user != null) {
+		// } else {
+		// result.addPair("success", false);
+		// }
 		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
 	}

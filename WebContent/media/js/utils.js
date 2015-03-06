@@ -78,7 +78,7 @@ function loadTweets() {
 		success : function(response) {
 			response = parseResponse(response);
 			if (response.success) {
-				if (response.tweet_count > 0) {
+				if (response.tweets_count > 0) {
 					$('#content').load('content/tweet_list.jsp');
 				} else {
 					$('#content').load('content/empty_tweets.jsp');
