@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Twittsire</title>
 <!-- CSS -->
+<!-- FontAwesome -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <!-- CSS Framework -->
 <link rel="stylesheet" type="text/css" href="media/css/framework.css" />
 <!-- Style CSS -->

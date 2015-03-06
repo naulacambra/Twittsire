@@ -1,13 +1,27 @@
 @CHARSET "UTF-8";
 
+/*HEADER*/
+header .header_button {
+	font-size: 50px;
+	color: #00cf00;
+	text-align: center;
+	padding: 20px;
+	cursor: pointer;
+}
+
+header .header_button:hover i{
+	text-shadow: 2px 2px 0px #888888;
+}
+/*!HEADER*/
+
 /*INDEX*/
-.loading{
-	background: rgba(0,0,0,0.5);
+.loading {
+	background: rgba(0, 0, 0, 0.5);
 	position: absolute;
 	height: 100%;
 }
 
-.loading:after{
+.loading:after {
 	content: '../img/loading.gif';
 	position: absolute;
 	width: 50px;
@@ -16,14 +30,11 @@
 	top: calc(50% - 25px);
 }
 /*!INDEX*/
-
-
-label.error,
-label.error_label {
+label.error,label.error_label {
 	display: none;
-    font: normal 10px arial;
-    padding: 3px;
-    margin: 3px;
-    background-color: #ffc;
-    border: 1px solid #c00;
+	font: normal 10px arial;
+	padding: 3px;
+	margin: 3px;
+	background-color: #ffc;
+	border: 1px solid #c00;
 }
