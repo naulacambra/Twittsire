@@ -65,7 +65,9 @@ function loadFollowings() {
 	});
 }
 
-function loadTweets() {
+function loadTweets(scoope, username) {
+	if(scoope == null)
+		scoope = 'global';
 	/* Load tweets */
 	$.ajax({
 		url : "tweetcontroller",
@@ -73,13 +75,16 @@ function loadTweets() {
 		dataType : "json",
 		data : {
 			action : 'getTweets',
-			scoope : 'global'
+			scoope : scoope,
+			username: username
 		},
 		success : function(response) {
 			response = parseResponse(response);
 			if (response.success) {
 				if (response.tweets_count > 0) {
-					$('#content').load('content/tweet_list.jsp');
+					$('#content').load('content/tweet_list.jsp', {}, function(){
+						bindUsernameLinks();
+					});
 				} else {
 					$('#content').load('content/empty_tweets.jsp');
 				}

@@ -3,4 +3,8 @@ jQuery(document).ready(function($) {
 		console.log('Web page loaded!');
 		$('#index_load').remove();
 	});
+	
+	$('.header_button').click(function(){
+		loadTweets($(this).data('scoope'));
+	});
 });

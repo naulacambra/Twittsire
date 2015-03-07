@@ -27,6 +27,8 @@
 <script type="text/javascript" src="media/js/login.js"></script>
 <!-- Tweet helper JS -->
 <script type="text/javascript" src="media/js/tweet.js"></script>
+<!-- Tweet list helper JS -->
+<script type="text/javascript" src="media/js/tweet_list.js"></script>
 </head>
 <body>
 	<%

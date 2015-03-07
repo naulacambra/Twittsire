@@ -9,7 +9,7 @@ header .header_button {
 	cursor: pointer;
 }
 
-header .header_button:hover i{
+header .header_button:hover i {
 	text-shadow: 2px 2px 0px #888888;
 }
 /*!HEADER*/
@@ -30,7 +30,32 @@ header .header_button:hover i{
 	top: calc(50% - 25px);
 }
 /*!INDEX*/
-label.error,label.error_label {
+
+/*TWEET LIST*/
+#tweet_list .tweet {
+	border: 2px solid #00A300;
+	border-radius: 5px;
+	margin: 10px 0;
+}
+
+#tweet_list .tweet .user_link {
+	padding: 5px;
+	background: #008000;
+	color: white;
+	opacity: 0.85;
+	text-decoration: none;
+}
+
+#tweet_list .tweet .user_link:hover{
+	opacity: 1;
+}
+
+#tweet_list .tweet .tweet_content {
+	background: #2ED22E;
+	padding: 10px;
+}
+/*!TWEET LIST*/
+label.error, label.error_label {
 	display: none;
 	font: normal 10px arial;
 	padding: 3px;

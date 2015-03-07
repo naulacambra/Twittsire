@@ -1,7 +1,5 @@
 jQuery(function($) {
-	console.log('tweets js!');
 	$('#tweet_form').submit(function(e) {
-		console.log("Creating tweet!");
 		e.preventDefault();
 		var form = $(this);
 		$.ajax({

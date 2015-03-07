@@ -59,4 +59,23 @@ public class Tweet {
 		}
 		return tweets;
 	}
+	
+	public static ArrayList<Tweet> getTweets(String username) {
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+		try {
+			DAO database = new DAO();
+			ResultSet result = database
+					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser WHERE u.username = '" + username + "' ORDER BY t.created_at DESC");
+			while (result.next()) {
+				User tempUser = new User();
+				tempUser.loadUser("username", result.getString("username"));
+				Tweet tempTweet = new Tweet(result.getString("text"),
+						result.getInt("idUser"), tempUser);
+				tweets.add(tempTweet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tweets;
+	}
 }

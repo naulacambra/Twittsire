@@ -7,8 +7,9 @@
 
 		for (Tweet tweet : tweets) {
 	%>
-	<div class="tweet">
-		<span>By: <%=tweet.getUser().getUsername()%></span> <span><%=tweet.getText()%></span>
+	<div class="tweet col-12">
+	<a href="#" class="user_link col-12 display" data-username="<%=  tweet.getUser().getUsername() %>"><%=tweet.getUser().getUsername()%></a>
+		<span class="col-12 tweet_content"><%=tweet.getText()%></span>
 	</div>
 	<%
 		}

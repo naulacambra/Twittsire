@@ -63,7 +63,6 @@ public class Follow {
 	
 	public static ArrayList<Follow> getFollowings(String username) {
 		ArrayList<Follow> followings = new ArrayList<Follow>();
-		System.out.println("followgins size: " + followings.size());
 		try {
 			DAO database = new DAO();
 			ResultSet result = database

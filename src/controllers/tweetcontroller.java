@@ -53,14 +53,18 @@ public class tweetcontroller extends HttpServlet {
 		// Comprovem quina accio s'ens ha demanat amb la variable "action"
 		switch (request.getParameter("action")) {
 		case "getTweets":
+			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 			result.addPair("success", true);
 			switch (request.getParameter("scoope")) {
 			case "global":
-				ArrayList<Tweet> tweets = Tweet.getTweets();
-				result.addPair("tweets_count", tweets.size());
-				session.setAttribute("tweets", tweets);
+				tweets = Tweet.getTweets();
+				break;
+			case "user":
+				tweets = Tweet.getTweets(request.getParameter("username"));
 				break;
 			}
+			result.addPair("tweets_count", tweets.size());
+			session.setAttribute("tweets", tweets);
 			break;
 		case "createTweet":
 			result.addPair("success", true);
@@ -68,7 +72,7 @@ public class tweetcontroller extends HttpServlet {
 					((User) session.getAttribute("user")).getIdUser());
 			try {
 				DAO database = new DAO();
-				//Guardem l'objecte Tweet directament a la base de dades
+				// Guardem l'objecte Tweet directament a la base de dades
 				database.saveObject(tempTweet);
 			} catch (Exception e) {
 				e.printStackTrace();
