@@ -38,16 +38,33 @@ header .header_button:hover i {
 	margin: 10px 0;
 }
 
-#tweet_list .tweet .user_link {
-	padding: 5px;
+#tweet_list .tweet .tweet_header{
 	background: #008000;
-	color: white;
-	opacity: 0.85;
-	text-decoration: none;
+	padding: 5px;
 }
 
-#tweet_list .tweet .user_link:hover{
+#tweet_list .tweet .tweet_header .user_link {
+	opacity: 0.85;
+	text-decoration: none;
+	color: #ffffff;
+}
+
+#tweet_list .tweet .tweet_header .user_link:hover{
 	opacity: 1;
+}
+
+#tweet_list .tweet .tweet_header .rate_tweet{
+	color: #ffffff;
+}
+
+#tweet_list .tweet .tweet_header .rate_tweet.like.rated,
+#tweet_list .tweet .tweet_header .rate_tweet.like:hover{
+	color: blue;
+}
+
+#tweet_list .tweet .tweet_header .rate_tweet.dislike.rated,
+#tweet_list .tweet .tweet_header .rate_tweet.dislike:hover{
+	color: red;
 }
 
 #tweet_list .tweet .tweet_content {

@@ -83,7 +83,7 @@ function loadTweets(scoope, username) {
 			if (response.success) {
 				if (response.tweets_count > 0) {
 					$('#content').load('content/tweet_list.jsp', {}, function(){
-						bindUsernameLinks();
+						bindTweetLinks();
 					});
 				} else {
 					$('#content').load('content/empty_tweets.jsp');

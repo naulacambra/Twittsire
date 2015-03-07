@@ -64,6 +64,14 @@ public class DAO {
 													.capitalize(definition[i]))
 							.invoke(o).toString();
 					break;
+				case "boolean":
+					values[i] = Boolean.valueOf(clazz
+							.getMethod(
+									"get"
+											+ StringManager
+													.capitalize(definition[i]))
+							.invoke(o).toString()) ? "1" : "0";
+					break;
 				case "String":
 				default:
 					values[i] = "\""
