@@ -16,4 +16,8 @@ public class StringManager {
 	public static String removeFirstAndLast(String line){
 		return StringManager.removeFirst(StringManager.removeLast(line));
 	}
+	
+	public static String singularOrPlural(int count, String singular, String plural){
+		return count != 1 ? plural : singular; 
+	}
 }

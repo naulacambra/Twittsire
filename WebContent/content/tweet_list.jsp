@@ -2,6 +2,7 @@
 <%@ page import="models.Tweet"%>
 <%@ page import="models.User"%>
 <%@ page import="models.Follow"%>
+<%@ page import="managers.StringManager"%>
 <div id="tweet_list" class="col-12">
 	<%
 		User user = (User) session.getAttribute("user");
@@ -54,7 +55,7 @@
 		<span class="col-12 tweet_content"> <%=tweet.getText()%></span>
 		<div class="tweet_comments col-12">
 			<a href="" class="comment_tweet"><i class="fa fa-comment-o"></i></a>
-			<span><%= tweet.getCommentCount() %></span>
+			<span><%= tweet.getCommentCount() + " " + StringManager.singularOrPlural(tweet.getCommentCount(), "comment", "comments") %></span>
 		</div>
 	</div>
 	<%
