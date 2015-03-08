@@ -43,6 +43,15 @@ header .header_button:hover i {
 	padding: 5px;
 }
 
+#tweet_list .tweet .tweet_header .follow_user.followed,
+#tweet_list .tweet .tweet_header .follow_user:hover{
+	color: blue;
+}
+
+#tweet_list .tweet .tweet_header .follow_user.followed:hover{
+	color: red;
+}
+
 #tweet_list .tweet .tweet_header .user_link {
 	opacity: 0.85;
 	text-decoration: none;

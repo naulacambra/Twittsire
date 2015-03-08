@@ -54,8 +54,13 @@ public class tweetcontroller extends HttpServlet {
 		switch (request.getParameter("action")) {
 		case "getTweets":
 			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+			ArrayList<Follow> followings = new ArrayList<Follow>();
 			result.addPair("success", true);
 			User user = (User) session.getAttribute("user");
+			if (user != null) {
+				followings = Follow.getFollowings(user
+						.getUsername());
+			}
 			switch (request.getParameter("scoope")) {
 			case "global":
 				if (user != null) {
@@ -78,9 +83,15 @@ public class tweetcontroller extends HttpServlet {
 							user.getUsername());
 				}
 				break;
+			case "followings":
+				if (user != null) {
+					tweets = Tweet.getTweetsFromFollowings(user.getIdUser());
+				}
+				break;
 			}
 			result.addPair("tweets_count", tweets.size());
 			session.setAttribute("tweets", tweets);
+			session.setAttribute("followings", followings);
 			break;
 		case "createTweet":
 			result.addPair("success", true);

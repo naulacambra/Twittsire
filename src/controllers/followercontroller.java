@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import models.Follow;
 import models.User;
+import utils.DAO;
 import utils.JSON;
 
 /**
@@ -65,6 +66,30 @@ public class followercontroller extends HttpServlet {
 						.getUsername());
 				result.addPair("followers_count", followings.size());
 				session.setAttribute("followings", followings);
+				break;
+			case "followUser":
+				result.addPair("success", true);
+				try {
+					User followedUser = new User();
+					followedUser.loadUser("username",
+							request.getParameter("username"));
+					Follow tempFollow = new Follow(user.getIdUser(),
+							followedUser.getIdUser());
+					DAO database = new DAO();
+					database.saveObject(tempFollow);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case "unfollowUser":
+				result.addPair("success", true);
+				User followedUser = new User();
+				followedUser.loadUser("username",
+						request.getParameter("username"));
+				Follow tempFollow = new Follow(user.getIdUser(),
+						followedUser.getIdUser());
+				if(tempFollow.exists())
+					tempFollow.delete();
 				break;
 			}
 		} else {

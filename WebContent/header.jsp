@@ -7,7 +7,7 @@
 			<a class="header_button global center col-12 display selected" data-content="tweets.jsp" data-scoope="global"><i class="fa fa-globe"></i></a>
 		</div>
 		<div class="col-4">
-			<a class="header_button followings center col-12 display" data-content="tweets.jsp" data-scoope="followers"><i class="fa fa-users"></i></a>
+			<a class="header_button followings center col-12 display" data-content="tweets.jsp" data-scoope="followings"><i class="fa fa-users"></i></a>
 		</div>
 		<div class="col-4">
 			<a class="header_button personal center col-12 display" data-content="tweets.jsp" data-scoope="personal"><i class="fa fa-user"></i></a>

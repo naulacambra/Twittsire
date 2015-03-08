@@ -19,14 +19,14 @@ public class Tweet {
 		this.idUser = idUser;
 		this.rate = 0;
 	}
-	
-	public Tweet(String text, int idUser, User user, int idTweet){
+
+	public Tweet(String text, int idUser, User user, int idTweet) {
 		this(text, idUser);
 		this.user = user;
 		this.idTweet = idTweet;
 		this.rate = 0;
 	}
-	
+
 	public Tweet(String text, int idUser, User user, int idTweet, int rate) {
 		this(text, idUser, user, idTweet);
 		this.rate = rate;
@@ -47,8 +47,8 @@ public class Tweet {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
-	
-	public User getUser(){
+
+	public User getUser() {
 		return this.user;
 	}
 
@@ -59,7 +59,7 @@ public class Tweet {
 	public void setIdTweet(int idTweet) {
 		this.idTweet = idTweet;
 	}
-	
+
 	public int getRate() {
 		return rate;
 	}
@@ -78,7 +78,8 @@ public class Tweet {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
-						result.getInt("idUser"), tempUser, result.getInt("idTweet"));
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -86,18 +87,23 @@ public class Tweet {
 		}
 		return tweets;
 	}
-	
+
 	public static ArrayList<Tweet> getTweets(int idUser) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username, r.rate FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser LEFT JOIN Rating r ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, r.rate "
+							+ "FROM Tweet t " + "LEFT JOIN User u "
+							+ "ON t.idUser = u.idUser " + "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = "
+							+ idUser + " " + "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
-						result.getInt("idUser"), tempUser, result.getInt("idTweet"), result.getInt("rate"));
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"), result.getInt("rate"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -105,18 +111,20 @@ public class Tweet {
 		}
 		return tweets;
 	}
-	
+
 	public static ArrayList<Tweet> getTweets(String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser WHERE u.username = '" + username + "' ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser WHERE u.username = '"
+							+ username + "' ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
-						result.getInt("idUser"), tempUser, result.getInt("idTweet"), 0);
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"), 0);
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -124,18 +132,53 @@ public class Tweet {
 		}
 		return tweets;
 	}
-	
+
 	public static ArrayList<Tweet> getTweets(int idUser, String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username, r.rate FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser LEFT JOIN Rating r ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " WHERE u.username = '" + username + "' ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, r.rate "
+							+ "FROM Tweet t " + "LEFT JOIN User u "
+							+ "ON t.idUser = u.idUser " + "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = "
+							+ idUser + " " + "WHERE u.username = '" + username
+							+ "' " + "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
-						result.getInt("idUser"), tempUser, result.getInt("idTweet"), result.getInt("rate"));
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"), result.getInt("rate"));
+				tweets.add(tempTweet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tweets;
+	}
+
+	public static ArrayList<Tweet> getTweetsFromFollowings(int idUser) {
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+		try {
+			DAO database = new DAO();
+			ResultSet result = database
+					.executeSelectSQL("SELECT t.*, u.username, r.rate "
+							+ "FROM Follow f "
+							+ "LEFT JOIN Tweet t "
+							+ "ON t.idUser = f.idUserFollowed "
+							+ "LEFT JOIN User u "
+							+ "ON u.idUser = f.idUserFollowed "
+							+ "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = f.idUserFollower "
+							+ "WHERE f.idUserFollower = " + idUser + " "
+							+ "ORDER BY t.created_at DESC");
+			while (result.next()) {
+				User tempUser = new User();
+				tempUser.loadUser("username", result.getString("username"));
+				Tweet tempTweet = new Tweet(result.getString("text"),
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"), result.getInt("rate"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
