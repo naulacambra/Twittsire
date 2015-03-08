@@ -97,6 +97,11 @@ header .header_button:hover i {
 	background: #2ED22E;
 	padding: 10px;
 }
+
+#tweet_list .tweet .tweet_content .comment_tweet{
+    color: white;
+	
+}
 /*!TWEET LIST*/
 label.error, label.error_label {
 	display: none;

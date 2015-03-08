@@ -51,7 +51,11 @@
 					class="fa fa-thumbs-o-down"></i></a>
 			</div>
 		</div>
-		<span class="col-12 tweet_content"><%=tweet.getText()%></span>
+		<span class="col-12 tweet_content"> <%=tweet.getText()%></span>
+		<div class="tweet_comments col-12">
+			<a href="" class="comment_tweet"><i class="fa fa-comment-o"></i></a>
+			<span><%= tweet.getCommentCount() %></span>
+		</div>
 	</div>
 	<%
 		}

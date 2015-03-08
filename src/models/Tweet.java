@@ -11,6 +11,7 @@ public class Tweet {
 	private User user;
 	private int idTweet;
 	private int rate;
+	private int commentCount;
 
 	public String[] definition = { "text", "idUser" };
 
@@ -72,6 +73,14 @@ public class Tweet {
 		this.rate = rate;
 	}
 
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+
 	public boolean loadTweet(int idTweet) {
 		try {
 			DAO database = new DAO();
@@ -101,19 +110,20 @@ public class Tweet {
 			e.printStackTrace();
 		}
 	}
-
+	/*Get all tweets for unregistered users*/
 	public static ArrayList<Tweet> getTweets() {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, COUNT(c.idTweet) as comment_count FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser LEFT JOIN tweet c ON t.idTweet = c.idTweetParent WHERE t.idTweetParent IS NULL GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"));
+				tempTweet.setCommentCount(result.getInt("comment_count"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -121,23 +131,30 @@ public class Tweet {
 		}
 		return tweets;
 	}
-
+	/*Get tweets and their rates from the logged user*/
 	public static ArrayList<Tweet> getTweets(int idUser) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username, r.rate "
-							+ "FROM Tweet t " + "LEFT JOIN User u "
-							+ "ON t.idUser = u.idUser " + "LEFT JOIN Rating r "
-							+ "ON r.idTweet = t.idTweet AND r.idUser = "
-							+ idUser + " " + "ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, r.rate, COUNT(c.idTweet) as comment_count "
+							+ "FROM Tweet t "
+							+ "LEFT JOIN User u "
+							+ "ON t.idUser = u.idUser " 
+							+ "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " "
+							+ "LEFT JOIN tweet c "
+							+ "ON t.idTweet = c.idTweetParent "
+							+ "WHERE t.idTweetParent IS NULL "
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "		
+							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"), result.getInt("rate"));
+				tempTweet.setCommentCount(result.getInt("comment_count"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -145,20 +162,29 @@ public class Tweet {
 		}
 		return tweets;
 	}
-
+	/*Get tweets from specific user*/
 	public static ArrayList<Tweet> getTweets(String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username FROM Tweet t LEFT JOIN User u ON t.idUser = u.idUser WHERE u.username = '"
-							+ username + "' ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, COUNT(c.idTweet) as comment_count "
+							+ "FROM Tweet t "
+							+ "LEFT JOIN User u "
+							+ "ON t.idUser = u.idUser "
+							+ "LEFT JOIN tweet c "
+							+ "ON t.idTweet = c.idTweetParent "
+							+ "WHERE u.username = '" + username + "' "
+							+ "AND t.idTweetParent IS NULL "
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet))"
+							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"), 0);
+				tempTweet.setCommentCount(result.getInt("comment_count"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -166,24 +192,31 @@ public class Tweet {
 		}
 		return tweets;
 	}
-
+	/**/
 	public static ArrayList<Tweet> getTweets(int idUser, String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username, r.rate "
-							+ "FROM Tweet t " + "LEFT JOIN User u "
-							+ "ON t.idUser = u.idUser " + "LEFT JOIN Rating r "
-							+ "ON r.idTweet = t.idTweet AND r.idUser = "
-							+ idUser + " " + "WHERE u.username = '" + username
-							+ "' " + "ORDER BY t.created_at DESC");
+					.executeSelectSQL("SELECT t.*, u.username, r.rate, COUNT(c.idTweet) as comment_count "
+							+ "FROM Tweet t " 
+							+ "LEFT JOIN User u "
+							+ "ON t.idUser = u.idUser " 
+							+ "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " "
+							+ "LEFT JOIN tweet c "
+							+ "ON t.idTweet = c.idTweetParent " 
+							+ "WHERE u.username = '" + username + "' "
+							+ "AND t.idTweetParent IS NULL "
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) " 
+							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
 				tempUser.loadUser("username", result.getString("username"));
 				Tweet tempTweet = new Tweet(result.getString("text"),
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"), result.getInt("rate"));
+				tempTweet.setCommentCount(result.getInt("comment_count"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
@@ -197,7 +230,7 @@ public class Tweet {
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT t.*, u.username, r.rate "
+					.executeSelectSQL("SELECT t.*, u.username, r.rate, COUNT(c.idTweet) as comment_count "
 							+ "FROM Follow f "
 							+ "LEFT JOIN Tweet t "
 							+ "ON t.idUser = f.idUserFollowed "
@@ -205,7 +238,11 @@ public class Tweet {
 							+ "ON u.idUser = f.idUserFollowed "
 							+ "LEFT JOIN Rating r "
 							+ "ON r.idTweet = t.idTweet AND r.idUser = f.idUserFollower "
+							+ "LEFT JOIN tweet c "
+							+ "ON t.idTweet = c.idTweetParent "
 							+ "WHERE f.idUserFollower = " + idUser + " "
+							+ "AND t.idTweetParent IS NULL "
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "
 							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
@@ -213,6 +250,7 @@ public class Tweet {
 				Tweet tempTweet = new Tweet(result.getString("text"),
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"), result.getInt("rate"));
+				tempTweet.setCommentCount(result.getInt("comment_count"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {
