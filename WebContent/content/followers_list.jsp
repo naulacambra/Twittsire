@@ -2,6 +2,7 @@
 <%@ page import="models.User"%>
 
 <div id="followers_list" class="col-12">
+<h3>FOLLOWERS</h3>
 	<%
 		ArrayList<User> followers = (ArrayList<User>) session
 				.getAttribute("usersFollowers");

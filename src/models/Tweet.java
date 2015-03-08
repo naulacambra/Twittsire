@@ -14,6 +14,10 @@ public class Tweet {
 
 	public String[] definition = { "text", "idUser" };
 
+	public Tweet() {
+
+	}
+
 	public Tweet(String text, int idUser) {
 		this.text = text;
 		this.idUser = idUser;
@@ -66,6 +70,36 @@ public class Tweet {
 
 	public void setRate(int rate) {
 		this.rate = rate;
+	}
+
+	public boolean loadTweet(int idTweet) {
+		try {
+			DAO database = new DAO();
+			ResultSet result = database
+					.executeSQL("SELECT * FROM Tweet WHERE idTweet = "
+							+ idTweet);
+			if (result.first()) {
+				this.setText(result.getString("text"));
+				this.setIdUser(result.getInt("idUser"));
+				this.setIdTweet(idTweet);
+				this.setRate(result.getInt("rate"));
+				return true;
+			} else
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void delete() {
+		try {
+			DAO database = new DAO();
+			database.executeInsertSQL("DELETE FROM Tweet WHERE idTweet = "
+					+ this.idTweet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static ArrayList<Tweet> getTweets() {

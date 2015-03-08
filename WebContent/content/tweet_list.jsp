@@ -27,8 +27,14 @@
 							}
 			%>
 			<a href="#" class="follow_user <%=extra_class%>"
-				data-username="<%=tweet.getUser().getUsername()%>"><i
+				data-username="<%=tweet.getUser().getUsername()%>"> <i
 				class="fa fa-user-plus"></i></a>
+			<%
+				} else if (user.getIdUser() == tweet.getUser().getIdUser()) {
+			%>
+			<a href="#" class="delete_tweet" data-tweet="<%=tweet.getIdTweet()%>">
+				<i class="fa fa-times"></i>
+			</a>
 			<%
 				}
 					}

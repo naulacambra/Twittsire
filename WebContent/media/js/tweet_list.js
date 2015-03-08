@@ -61,10 +61,32 @@ function bindTweetLinks() {
 			success : function(response) {
 				response = parseResponse(response);
 				if (response.success) {
-					
+
 				} else {
 					$(rating_button).removeClass('rated');
 				}
+			},
+			error : function(response) {
+				console.warn(response.responseText);
+			}
+		});
+	});
+
+	$('.delete_tweet').click(function(e) {
+		e.preventDefault();
+		var current_scoope = $('.header_button.selected').data('scoope');
+		/* Follow Tweet */
+		$.ajax({
+			url : "tweetcontroller",
+			type : "POST",
+			dataType : "json",
+			data : {
+				action : "deleteTweet",
+				tweet : $(this).data('tweet')
+			},
+			success : function(response) {
+				response = parseResponse(response);
+				loadTweets(current_scoope)
 			},
 			error : function(response) {
 				console.warn(response.responseText);

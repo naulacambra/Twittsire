@@ -5,6 +5,8 @@ jQuery(document).ready(function($) {
 	});
 	
 	$('.header_button').click(function(){
+		$('.header_button').removeClass('selected');
+		$(this).addClass('selected');
 		loadTweets($(this).data('scoope'));
 	});
 });

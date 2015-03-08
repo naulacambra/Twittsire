@@ -50,6 +50,7 @@ public class tweetcontroller extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
+		Tweet tempTweet = new Tweet();
 		// Comprovem quina accio s'ens ha demanat amb la variable "action"
 		switch (request.getParameter("action")) {
 		case "getTweets":
@@ -94,7 +95,7 @@ public class tweetcontroller extends HttpServlet {
 			break;
 		case "createTweet":
 			result.addPair("success", true);
-			Tweet tempTweet = new Tweet(request.getParameter("tweet_text"),
+			tempTweet = new Tweet(request.getParameter("tweet_text"),
 					((User) session.getAttribute("user")).getIdUser());
 			try {
 				DAO database = new DAO();
@@ -104,12 +105,13 @@ public class tweetcontroller extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case "deleteTweet":
+			result.addPair("success", true);
+			tempTweet = new Tweet();
+			tempTweet.loadTweet(Integer.valueOf(request.getParameter("tweet")));
+			tempTweet.delete();
+			break;
 		}
-		// User user = (User) session.getAttribute("user");
-		// if (user != null) {
-		// } else {
-		// result.addPair("success", false);
-		// }
 		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
 	}

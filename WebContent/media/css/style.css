@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+a {
+	text-decoration: none;
+}
+
 /*HEADER*/
 header .header_button {
 	font-size: 50px;
@@ -9,6 +13,7 @@ header .header_button {
 	cursor: pointer;
 }
 
+header .header_button.selected i,
 header .header_button:hover i {
 	text-shadow: 2px 2px 0px #888888;
 }
@@ -38,17 +43,29 @@ header .header_button:hover i {
 	margin: 10px 0;
 }
 
-#tweet_list .tweet .tweet_header{
+#tweet_list .tweet .tweet_header {
 	background: #008000;
 	padding: 5px;
 }
 
-#tweet_list .tweet .tweet_header .follow_user.followed,
-#tweet_list .tweet .tweet_header .follow_user:hover{
+#tweet_list .tweet .tweet_header .follow_user{
+	color: #ffffff;
+}
+
+#tweet_list .tweet .tweet_header .follow_user.followed, #tweet_list .tweet .tweet_header .follow_user:hover
+	{
 	color: blue;
 }
 
-#tweet_list .tweet .tweet_header .follow_user.followed:hover{
+#tweet_list .tweet .tweet_header .follow_user.followed:hover {
+	color: red;
+}
+
+#tweet_list .tweet .tweet_header .delete_tweet{
+	color: #ffffff;
+}
+
+#tweet_list .tweet .tweet_header .delete_tweet:hover{
 	color: red;
 }
 
@@ -58,21 +75,21 @@ header .header_button:hover i {
 	color: #ffffff;
 }
 
-#tweet_list .tweet .tweet_header .user_link:hover{
+#tweet_list .tweet .tweet_header .user_link:hover {
 	opacity: 1;
 }
 
-#tweet_list .tweet .tweet_header .rate_tweet{
+#tweet_list .tweet .tweet_header .rate_tweet {
 	color: #ffffff;
 }
 
-#tweet_list .tweet .tweet_header .rate_tweet.like.rated,
-#tweet_list .tweet .tweet_header .rate_tweet.like:hover{
+#tweet_list .tweet .tweet_header .rate_tweet.like.rated, #tweet_list .tweet .tweet_header .rate_tweet.like:hover
+	{
 	color: blue;
 }
 
-#tweet_list .tweet .tweet_header .rate_tweet.dislike.rated,
-#tweet_list .tweet .tweet_header .rate_tweet.dislike:hover{
+#tweet_list .tweet .tweet_header .rate_tweet.dislike.rated, #tweet_list .tweet .tweet_header .rate_tweet.dislike:hover
+	{
 	color: red;
 }
 
