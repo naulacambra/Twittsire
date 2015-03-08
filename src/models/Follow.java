@@ -46,12 +46,14 @@ public class Follow {
 		this.idUserFollowed = idUserFollowed;
 	}
 
-	public boolean exists(){
+	public boolean exists() {
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
 					.executeSelectSQL("SELECT * FROM Follow f WHERE idUserFollowed = "
-							+ this.idUserFollowed + " AND idUserFollower = " + this.idUserFollower);
+							+ this.idUserFollowed
+							+ " AND idUserFollower = "
+							+ this.idUserFollower);
 			if (result.first())
 				return true;
 			else
@@ -65,9 +67,10 @@ public class Follow {
 	public boolean delete() {
 		try {
 			DAO database = new DAO();
-			database
-					.executeInsertSQL("DELETE FROM Follow WHERE idUserFollower = "
-							+ this.idUserFollower + " AND idUserFollowed = " + this.idUserFollowed);
+			database.executeInsertSQL("DELETE FROM Follow WHERE idUserFollower = "
+					+ this.idUserFollower
+					+ " AND idUserFollowed = "
+					+ this.idUserFollowed);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,13 +78,12 @@ public class Follow {
 		return false;
 	}
 
-	public static ArrayList<Follow> getFollowers(String username) {
+	public static ArrayList<Follow> getFollowers(int idUser) {
 		ArrayList<Follow> followers = new ArrayList<Follow>();
 		try {
 			DAO database = new DAO();
 			ResultSet result = database
-					.executeSelectSQL("SELECT * FROM Follow f LEFT JOIN User u ON f.idUserFollowed = u.idUser AND u.username = '"
-							+ username + "'");
+					.executeSelectSQL("SELECT * FROM Follow f WHERE f.idUserFollowed = " + idUser);
 			while (result.next()) {
 				Follow tempFollower = new Follow(
 						result.getInt("idUserFollower"),
@@ -94,13 +96,12 @@ public class Follow {
 		return followers;
 	}
 
-	public static ArrayList<Follow> getFollowings(String username) {
+	public static ArrayList<Follow> getFollowings(int idUser) {
 		ArrayList<Follow> followings = new ArrayList<Follow>();
 		try {
 			DAO database = new DAO();
-			ResultSet result = database
-					.executeSelectSQL("SELECT * FROM Follow f LEFT JOIN User u ON f.idUserFollower = u.idUser AND u.username = '"
-							+ username + "'");
+			ResultSet result = database.executeSelectSQL("SELECT * "
+					+ "FROM Follow f  WHERE f.idUserFollower = " + idUser);
 			while (result.next()) {
 				Follow tempFollower = new Follow(
 						result.getInt("idUserFollower"),

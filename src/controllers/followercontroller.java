@@ -56,16 +56,30 @@ public class followercontroller extends HttpServlet {
 			case "getFollowers":
 				result.addPair("success", true);
 				ArrayList<Follow> followers = Follow.getFollowers(user
-						.getUsername());
+						.getIdUser());
+				ArrayList<User> usersFollowers =  new ArrayList<User>();
+				for(Follow follow : followers){
+					User tempUser =  new User();
+					tempUser.loadUser("idUser", follow.getIdUserFollower());
+					usersFollowers.add(tempUser);
+				}
 				result.addPair("followers_count", followers.size());
 				session.setAttribute("followers", followers);
+				session.setAttribute("usersFollowers", usersFollowers);
 				break;
 			case "getFollowings":
 				result.addPair("success", true);
 				ArrayList<Follow> followings = Follow.getFollowings(user
-						.getUsername());
-				result.addPair("followers_count", followings.size());
+						.getIdUser());
+				ArrayList<User> usersFollowings =  new ArrayList<User>();
+				for(Follow follow : followings){
+					User tempUser =  new User();
+					tempUser.loadUser("idUser", follow.getIdUserFollowed());
+					usersFollowings.add(tempUser);
+				}
+				result.addPair("followings_count", followings.size());
 				session.setAttribute("followings", followings);
+				session.setAttribute("usersFollowings", usersFollowings);
 				break;
 			case "followUser":
 				result.addPair("success", true);

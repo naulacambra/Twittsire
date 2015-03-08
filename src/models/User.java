@@ -127,6 +127,26 @@ public class User {
 			return false;
 		}
 	}
+	
+	public boolean loadUser(String parameter, int value) {
+		try {
+			database = new DAO();
+			ResultSet result = database.executeSQL("SELECT * FROM User WHERE "
+					+ parameter + " = " + value);
+			if (result.first()) {
+				this.setIdUser(result.getInt("idUser"));
+				this.setName(result.getString("name"));
+				this.setSurname(result.getString("surname"));
+				this.setUsername(result.getString("username"));
+				this.setMail(result.getString("mail"));
+				return true;
+			} else
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public String toString() {
 		return this.name + " " + this.surname + " " + this.username + " "

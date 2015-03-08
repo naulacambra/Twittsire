@@ -24,7 +24,7 @@ function loadFollowers() {
 			response = parseResponse(response);
 			if (response.success) {
 				if (response.followers_count > 0) {
-
+					$('#followers').load('content/followers_list.jsp');
 				} else {
 					$('#followers').load('content/empty_followers.jsp');
 				}
@@ -51,7 +51,7 @@ function loadFollowings() {
 			response = parseResponse(response);
 			if (response.success) {
 				if (response.followings_count > 0) {
-
+					$('#followings').load('content/followings_list.jsp');
 				} else {
 					$('#followings').load('content/empty_followings.jsp');
 				}
@@ -66,7 +66,7 @@ function loadFollowings() {
 }
 
 function loadTweets(scoope, username) {
-	if(scoope == null)
+	if (scoope == null)
 		scoope = 'global';
 	/* Load tweets */
 	$.ajax({
@@ -76,15 +76,16 @@ function loadTweets(scoope, username) {
 		data : {
 			action : 'getTweets',
 			scoope : scoope,
-			username: username
+			username : username
 		},
 		success : function(response) {
 			response = parseResponse(response);
 			if (response.success) {
 				if (response.tweets_count > 0) {
-					$('#content').load('content/tweet_list.jsp', {}, function(){
-						bindTweetLinks();
-					});
+					$('#content').load('content/tweet_list.jsp', {},
+							function() {
+								bindTweetLinks();
+							});
 				} else {
 					$('#content').load('content/empty_tweets.jsp');
 				}

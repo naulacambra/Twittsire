@@ -58,8 +58,7 @@ public class tweetcontroller extends HttpServlet {
 			result.addPair("success", true);
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
-				followings = Follow.getFollowings(user
-						.getUsername());
+				followings = Follow.getFollowings(user.getIdUser());
 			}
 			switch (request.getParameter("scoope")) {
 			case "global":
