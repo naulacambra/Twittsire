@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,8 +8,12 @@ import java.util.ArrayList;
 import utils.DAO;
 import utils.Encryption;
 
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Definim les variables que contindrà l'usuari i que s'hauran d'omplir
 	private String name = "";
 	private String surname = "";

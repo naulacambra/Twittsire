@@ -1,11 +1,16 @@
 package models;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import utils.DAO;
 
-public class Follow {
+public class Follow implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int idUserFollower;
 	private int idUserFollowed;
 
