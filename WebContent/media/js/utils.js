@@ -123,3 +123,59 @@ function editTweet() {
 		}
 	});
 }
+
+function bindEditProfile() {
+	dialog_user = $("#edit_user_form").dialog({
+		autoOpen : false,
+		height : 300,
+		width : 350,
+		modal : true,
+		buttons : {
+			"Edit profile" : function() {
+				editUser();
+				dialog_user.dialog("close");
+			},
+			Cancel : function() {
+				dialog_user.dialog("close");
+			}
+		}
+	});
+
+	$('.edit_user').click(function(e) {
+		e.preventDefault();
+		var name = $(this).parent().find('#user_name').text();
+		var surname = $(this).parent().find('#user_surname').text();
+		$(dialog_user).find('#name').val(name);
+		$(dialog_user).find('#surname').val(surname);
+		dialog_user.dialog("open");
+	});
+}
+
+function editUser() {
+	var name = $('#edit_user_form').find('#name').val();
+	var surname = $('#edit_user_form').find('#surname').val();
+	var password = $('#edit_user_form').find('#password').val();
+	/* Edit tweet */
+	$.ajax({
+		url : "usercontroller",
+		type : "POST",
+		dataType : "json",
+		data : {
+			action : 'editUser',
+			name : name,
+			surname : surname,
+			password : password
+		},
+		success : function(response) {
+			response = parseResponse(response);
+			if (response.success) {
+				$('#right_sidebar').load('contentcontroller', {
+					content : 'content/user_panel.jsp'
+				}, bindEditProfile);
+			}
+		},
+		error : function(response) {
+
+		}
+	});
+}
