@@ -8,6 +8,7 @@
 			} else {
 		%>
 		<jsp:include page="content/login.jsp" />
+		<jsp:include page="content/register.jsp" />
 		<%
 			}
 		%>

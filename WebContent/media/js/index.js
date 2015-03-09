@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	$.when(loadFollowers(), loadFollowings(), loadTweets()).done(function() {
+	$.when(checkDatabase(), loadFollowers(), loadFollowings(), loadTweets()).done(function() {
 		console.log('Web page loaded!');
 		$('#index_load').remove();
 	});
