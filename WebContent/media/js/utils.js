@@ -11,6 +11,24 @@ function parseResponse(response) {
 	return new_response;
 }
 
+function checkDatabase(){
+	/* Load followers */
+	$.ajax({
+		url : "ajaxcontroller",
+		type : "POST",
+		dataType : "json",
+		data : {
+			action : 'checkDatabase'
+		},
+		success : function(response) {
+			response = parseResponse(response);
+		},
+		error : function(response) {
+
+		}
+	});
+}
+
 function loadFollowers() {
 	/* Load followers */
 	$.ajax({

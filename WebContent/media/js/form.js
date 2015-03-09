@@ -1,11 +1,12 @@
 jQuery(document).ready(function($) {
 	/* Quan l'usuari abandona el camp 'username' disparem la cridada AJAX */
-	$('#username').focusout(function() {
+	$('.username').focusout(function() {
+		var field = $(this);
 		ajaxCall({
 			/* Definim quina acci� volem fer en el servlet */
 			action : 'checkUsername',
 			/* Enviem el nom d'usuari que ha de comprovar */
-			data : $('#username').val()
+			data : $(field).val()
 		}, $('.error_label[for="username"]'), function(response) {
 			response = parseResponse(response);
 			/* Comprovem si la cridada ajax ha anat b� */

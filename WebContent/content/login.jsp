@@ -1,8 +1,10 @@
 <div class="col-12">
 	<form class="login_form" data-content="content/user_panel.jsp">
-		<input type="hidden" name="action" value="login" /> <input
-			type="text" name="username_mail" /> <input type="password"
-			name="password" /> <input type="submit" value="login" />
+		<input type="hidden" name="action" value="login" class="col-12" />
+		<input type="text" name="username_mail" class="username_mail col-12"/>
+		<label class="error" for="username_mail">This username or mail doesn't exists</label>
+		<input type="password" name="password" class="col-12"/>
+		<input type="submit" value="login" class="col-12"/>
 	</form>
 </div>
 <!-- <form action="/epaw_p3/formcontroller" method="post" id=loginForm> -->
