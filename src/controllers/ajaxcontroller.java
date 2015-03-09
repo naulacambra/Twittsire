@@ -64,10 +64,11 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("exists",
 					User.mailExists(request.getParameter("data")));
 			break;
+		// Comprovar si s'esta fent login
 		case "login":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
-			// Comprovem si el mail donat ja està registrat
+			// Comprovem si s'està omplint el camp del login
 			result.addPair(
 					"login",
 					User.userLoginWithMail(
@@ -78,8 +79,10 @@ public class ajaxcontroller extends HttpServlet {
 									request.getParameter("password")));
 			if (Boolean.valueOf(result.getValue("login"))) {
 				User user = new User();
+				//Si existeix l'email, carreguem les seves dades
 				if (User.mailExists(request.getParameter("username_mail")))
 					user.loadUser("mail", request.getParameter("username_mail"));
+				//Si existeix el nom d'usuari, carreguem les seves dades
 				else if (User.usernameExists(request
 						.getParameter("username_mail")))
 					user.loadUser("username",
@@ -87,13 +90,17 @@ public class ajaxcontroller extends HttpServlet {
 				else
 					break;
 
+				// Carreguem la sessió 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 			}
 			break;
+		// Comprovar si s'esta fent logout
 		case "logout":
+			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
 			System.out.println("logging out!");
+			// Tanquem la sessió
 			HttpSession session = request.getSession(false);
 			session.invalidate();
 			break;

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class contentcontroller
+ * Aquest servlet s'encarrega de carregar de manera general el contingut de la pàgina web
  */
 @WebServlet("/contentcontroller")
 public class contentcontroller extends HttpServlet {
@@ -28,7 +28,8 @@ public class contentcontroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-			
+		
+		//Cridem a la carpeta JSP list.jsp per mostrar la llista d'usuaris
 		String content = (String)request.getParameter("content");
      	RequestDispatcher dispatcher = 
 					request.getRequestDispatcher(content);
@@ -40,6 +41,7 @@ public class contentcontroller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//Si rebem una petició POST la processem com si fos GET
 		doGet(request,response);
 	}
 
