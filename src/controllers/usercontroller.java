@@ -14,7 +14,7 @@ import utils.DAO;
 import utils.JSON;
 
 /**
- * Servlet implementation class usercontroller
+ * Aquest servlet s'encarrega d'actualitzar les dades d'usuari
  */
 @WebServlet("/usercontroller")
 public class usercontroller extends HttpServlet {
@@ -33,6 +33,7 @@ public class usercontroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Si rebem una petició GET la processem com si fos POST
 		doPost(request, response);
 	}
 
@@ -51,12 +52,16 @@ public class usercontroller extends HttpServlet {
 		if (user != null) {
 			// Comprovem quina accio s'ens ha demanat amb la variable "action"
 			switch (request.getParameter("action")) {
+			// En cas de que es vulgui editar dades de l'usuari
 			case "editUser":
 				try {
+					// Si hem arribat fins aqui, donem per bona la petició AJAX
 					result.addPair("success", true);
+					// Modifiquem les dades 
 					user.setName(request.getParameter("name"));
 					user.setSurname(request.getParameter("surname"));
 					user.setPassword(request.getParameter("password"));
+					// Actualitzem la informació a la base de dades
 					DAO database = new DAO();
 					database.updateObject(user);
 					session.setAttribute("user", user);
@@ -67,6 +72,7 @@ public class usercontroller extends HttpServlet {
 			}
 
 		} else {
+			// Si arribem aqui, la petició AJAX no s'ha processat correctament
 			result.addPair("success", false);
 		}
 		// Escrivim en la resposta les dades en format JSON
