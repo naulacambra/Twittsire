@@ -1,3 +1,5 @@
+// Aquesta classe conté mètodes necessaris per tractar string de manera mès fàcil i ordenada
+
 package managers;
 
 public class StringManager {

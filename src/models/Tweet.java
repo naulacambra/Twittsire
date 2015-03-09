@@ -1,3 +1,5 @@
+// Aquesta classe conté tot el que fa referència als tweets
+
 package models;
 
 import java.io.Serializable;
@@ -105,6 +107,7 @@ public class Tweet implements Serializable {
 		this.idTweetParent = idTweetParent;
 	}
 
+	// Mètode que carregarà el tweet des de la base de dades
 	public boolean loadTweet(int idTweet) {
 		try {
 			DAO database = new DAO();
@@ -125,6 +128,7 @@ public class Tweet implements Serializable {
 		}
 	}
 
+	// Mètode per esborrar un tweet de la base de dades
 	public void delete() {
 		try {
 			DAO database = new DAO();
@@ -135,7 +139,7 @@ public class Tweet implements Serializable {
 		}
 	}
 
-	/* Get all tweets for unregistered users */
+	// Mètode per usuaris que no estan enregistrats, per agafar tots els tweets
 	public static ArrayList<Tweet> getTweets() {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -157,7 +161,7 @@ public class Tweet implements Serializable {
 		return tweets;
 	}
 
-	/* Get tweets and their rates from the logged user */
+	// Mètode per usuaris loguejats, per agafar els tweets i les seves respectives valoracions
 	public static ArrayList<Tweet> getTweets(int idUser) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -191,7 +195,7 @@ public class Tweet implements Serializable {
 		return tweets;
 	}
 
-	/* Get tweets from specific user */
+	// Mètode per agafar el llistat de tweets d'un usuari concret
 	public static ArrayList<Tweet> getTweets(String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -224,7 +228,7 @@ public class Tweet implements Serializable {
 		return tweets;
 	}
 
-	/**/
+	//Mètode per agafar els tweets d'un usuari concret i les seves valoracions
 	public static ArrayList<Tweet> getTweets(int idUser, String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -261,6 +265,7 @@ public class Tweet implements Serializable {
 		return tweets;
 	}
 
+	// Mètode per agafar tweets i valoracions d'usuaris a qui segueixes
 	public static ArrayList<Tweet> getTweetsFromFollowings(int idUser) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -297,6 +302,7 @@ public class Tweet implements Serializable {
 		return tweets;
 	}
 
+	// Mètode per agafar els comentaris d'un tweet
 	public static ArrayList<Tweet> getComments(int idTweet) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {

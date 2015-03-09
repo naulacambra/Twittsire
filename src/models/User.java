@@ -1,3 +1,5 @@
+// Aquesta classe conté tot el que fa referencia als usuaris
+
 package models;
 
 import java.io.Serializable;
@@ -114,6 +116,7 @@ public class User implements Serializable{
 		return ((val != null) && (!val.equals("")));
 	}
 
+	// Mètode que carregarà l'usuari des de la base de dades
 	public boolean loadUser(String parameter, String value) {
 		try {
 			database = new DAO();

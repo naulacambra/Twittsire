@@ -1,3 +1,6 @@
+// Aquesta classe conté tot lo que fa referència a les relacions entre usuaris, els follows
+// Treballa amb directament amb la base de dades
+
 package models;
 
 import java.io.Serializable;
@@ -51,6 +54,7 @@ public class Follow implements Serializable{
 		this.idUserFollowed = idUserFollowed;
 	}
 
+	// Mètode que comprobarà si existeix la relació de follow a la base de dades
 	public boolean exists() {
 		try {
 			DAO database = new DAO();
@@ -69,6 +73,7 @@ public class Follow implements Serializable{
 		return false;
 	}
 
+	// Mètode per esborrar un follow
 	public boolean delete() {
 		try {
 			DAO database = new DAO();
@@ -83,6 +88,7 @@ public class Follow implements Serializable{
 		return false;
 	}
 
+	// Mètode per mostrar el llistat de followers d'un usuari
 	public static ArrayList<Follow> getFollowers(int idUser) {
 		ArrayList<Follow> followers = new ArrayList<Follow>();
 		try {
@@ -101,6 +107,7 @@ public class Follow implements Serializable{
 		return followers;
 	}
 
+	// Mètode per mostrar el llistat de followings d'un usuari
 	public static ArrayList<Follow> getFollowings(int idUser) {
 		ArrayList<Follow> followings = new ArrayList<Follow>();
 		try {

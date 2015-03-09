@@ -1,3 +1,5 @@
+// Aquesta classe conté tot el que fa referencia a les valoracions dels tweets
+
 package models;
 
 import java.sql.ResultSet;
@@ -47,6 +49,7 @@ public class Rating {
 		this.rate = rate;
 	}
 
+	// Mètode que comprobarà si existeix la relació de rating a la base de dades 
 	public boolean exists() {
 		try {
 			DAO database = new DAO();
@@ -63,6 +66,7 @@ public class Rating {
 		return false;
 	}
 
+	// Mètode per esborrar una valoració
 	public boolean delete() {
 		try {
 			DAO database = new DAO();
@@ -76,6 +80,7 @@ public class Rating {
 		return false;
 	}
 
+	// Mètode per actualitzar les valoracions
 	public void update() {
 		try {
 			DAO database = new DAO();
