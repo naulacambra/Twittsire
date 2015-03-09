@@ -25,6 +25,7 @@ public class User implements Serializable{
 	private int[] error = { 0, 0 };
 	public String[] definition = { "name", "surname", "username", "mail",
 			"password", "idRole" };
+	public String identifier = "idUser";
 	// Definim un DAO per poder fer consultes a la base de dades
 	private static DAO database = null;
 
