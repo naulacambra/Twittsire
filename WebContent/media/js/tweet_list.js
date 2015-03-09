@@ -149,4 +149,29 @@ function bindTweetLinks() {
 			}
 		});
 	});
+
+	dialog = $("#edit_tweet_form").dialog({
+		autoOpen : false,
+		height : 300,
+		width : 350,
+		modal : true,
+		buttons : {
+			"Edit tweet" : function() {
+				editTweet();
+				dialog.dialog("close");
+			},
+			Cancel : function() {
+				dialog.dialog("close");
+			}
+		}
+	});
+
+	$('.edit_tweet').click(function(e) {
+		e.preventDefault();
+		var tweet = $(this).parent().parent().find('.tweet_content').text();
+		var idTweet = $(this).data('tweet');
+		$(dialog).find('#tweet_textarea').val(tweet);
+		$(dialog).find('#id_tweet_edit').val(idTweet);
+		dialog.dialog("open");
+	});
 }

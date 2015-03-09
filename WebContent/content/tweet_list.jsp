@@ -35,6 +35,8 @@
 			%>
 			<a href="#" class="delete_tweet" data-tweet="<%=tweet.getIdTweet()%>">
 				<i class="fa fa-times"></i>
+			</a> <a href="#" class="edit_tweet" data-tweet="<%=tweet.getIdTweet()%>">
+				<i class="fa fa-pencil-square-o"></i>
 			</a>
 			<%
 				}
@@ -52,15 +54,30 @@
 					class="fa fa-thumbs-o-down"></i></a>
 			</div>
 		</div>
-		<span class="col-12 tweet_content"> <%=tweet.getText()%></span>
+		<span class="col-12 tweet_content"><%=tweet.getText()%></span>
 		<div class="tweet_comments col-12">
-			<a href="" class="comment_tweet" data-idtweet="<%=tweet.getIdTweet()%>"><i class="fa fa-comment-o"></i></a>
-			<span>Show <%= tweet.getCommentCount() + " " + StringManager.singularOrPlural(tweet.getCommentCount(), "comment", "comments") %></span>
-			<textarea class="comment_area col-12" placeholder="Write here your comment" data-idtweet="<%=tweet.getIdTweet()%>"></textarea>
+			<a href="" class="comment_tweet"
+				data-idtweet="<%=tweet.getIdTweet()%>"><i
+				class="fa fa-comment-o"></i></a> <span>Show <%=tweet.getCommentCount()
+						+ " "
+						+ StringManager.singularOrPlural(
+								tweet.getCommentCount(), "comment", "comments")%></span>
+			<textarea class="comment_area col-12"
+				placeholder="Write here your comment"
+				data-idtweet="<%=tweet.getIdTweet()%>"></textarea>
 			<div class="comments_list"></div>
 		</div>
 	</div>
 	<%
 		}
 	%>
+</div>
+<div id="edit_tweet_form" title="Edit tweet">
+	<form>
+	<input type="hidden" id="id_tweet_edit" value="" />
+		<textarea id="tweet_textarea" class="col-12"></textarea>
+		<!-- Allow form submission with keyboard without duplicating the dialog button -->
+		<input type="submit" tabindex="-1"
+			style="position: absolute; top: -1000px">
+	</form>
 </div>

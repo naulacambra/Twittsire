@@ -98,3 +98,28 @@ function loadTweets(scoope, username) {
 		}
 	});
 }
+
+function editTweet() {
+	var tweet_text = $('#edit_tweet_form').find('#tweet_textarea').val();
+	var id_tweet = $('#edit_tweet_form').find('#id_tweet_edit').val();
+	/* Edit tweet */
+	$.ajax({
+		url : "tweetcontroller",
+		type : "POST",
+		dataType : "json",
+		data : {
+			action : 'editTweet',
+			tweet : id_tweet,
+			text : tweet_text
+		},
+		success : function(response) {
+			response = parseResponse(response);
+			if (response.success) {
+				loadTweets($('.header_button.selected').data('scoope'));
+			}
+		},
+		error : function(response) {
+
+		}
+	});
+}

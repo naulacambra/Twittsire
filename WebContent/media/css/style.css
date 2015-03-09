@@ -61,12 +61,17 @@ header .header_button:hover i {
 	color: red;
 }
 
-#tweet_list .tweet .tweet_header .delete_tweet{
+#tweet_list .tweet .tweet_header .delete_tweet,
+#tweet_list .tweet .tweet_header .edit_tweet{
 	color: #ffffff;
 }
 
 #tweet_list .tweet .tweet_header .delete_tweet:hover{
 	color: red;
+}
+
+#tweet_list .tweet .tweet_header .edit_tweet:hover{
+	color: blue;
 }
 
 #tweet_list .tweet .tweet_header .user_link {
@@ -105,6 +110,13 @@ header .header_button:hover i {
 #tweet_list .tweet .tweet_comments .comment_area{
 	resize: none;
 }
+
+/*EDIT TWEET FORM*/
+#edit_tweet_form #tweet_textarea{
+	resize: none;
+	height: 100px;
+}
+/*!EDIT TWEET FORM*/
 /*!TWEET LIST*/
 label.error, label.error_label {
 	display: none;

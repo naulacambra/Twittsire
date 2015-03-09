@@ -6,8 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Twittsire</title>
 <!-- CSS -->
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" type="text/css" href="media/css/jquery-ui.min.css">
 <!-- FontAwesome -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <!-- CSS Framework -->
 <link rel="stylesheet" type="text/css" href="media/css/framework.css" />
 <!-- Style CSS -->
@@ -15,6 +17,8 @@
 <!-- JS -->
 <!-- jQuery -->
 <script type="text/javascript" src="media/js/jquery-1.7.1.js"></script>
+<!-- jQuery UI -->
+<script type="text/javascript" src="media/js/jquery-ui.min.js"></script>
 <!-- Validate.js -->
 <script type="text/javascript" src="media/js/jquery.validate.js"></script>
 <!-- Utils JS -->

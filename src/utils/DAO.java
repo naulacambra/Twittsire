@@ -100,6 +100,76 @@ public class DAO {
 		}
 	}
 
+	public boolean updateObject(Object o) {
+		Class<?> clazz;
+		String identifier;
+		String[] definition, values;
+		String query = "";
+		try {
+			clazz = Class.forName(o.getClass().getName());
+			definition = ((String[]) (clazz.getField("definition").get(o)));
+			identifier = ((String) (clazz.getField("identifier").get(o)));
+			values = new String[definition.length];
+			query = "UPDATE " + o.getClass().getSimpleName() + " SET ";
+			for (int i = 0; i < definition.length; i++) {
+				switch (clazz
+						.getMethod(
+								"get" + StringManager.capitalize(definition[i]))
+						.getReturnType().getSimpleName()) {
+				case "int":
+				case "Integer":
+					try {
+						values[i] = definition[i]
+								+ " = "
+								+ clazz.getMethod(
+										"get"
+												+ StringManager
+														.capitalize(definition[i]))
+										.invoke(o).toString();
+					} catch (java.lang.NullPointerException e) {
+						values[i] = definition[i] + " = null"; 
+					}
+					break;
+				case "boolean":
+					values[i] = definition[i]
+							+ " = "
+							+ (Boolean
+									.valueOf(clazz
+											.getMethod(
+													"get"
+															+ StringManager
+																	.capitalize(definition[i]))
+											.invoke(o).toString()) ? "1" : "0");
+					break;
+				case "String":
+				default:
+					values[i] = definition[i]
+							+ " = \""
+							+ clazz.getMethod(
+									"get"
+											+ StringManager
+													.capitalize(definition[i]))
+									.invoke(o).toString() + "\"";
+				}
+			}
+			query += StringManager.removeFirstAndLast(Arrays.asList(values)
+					.toString());
+			query += " WHERE " + identifier + " = " + clazz.getMethod(
+					"get"
+							+ StringManager
+									.capitalize(identifier))
+					.invoke(o).toString();
+			executeInsertSQL(query);
+			return true;
+		} catch (ClassNotFoundException | NoSuchFieldException
+				| SecurityException | IllegalArgumentException
+				| IllegalAccessException | InvocationTargetException
+				| NoSuchMethodException | SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public void disconnectBD() throws SQLException {
 		statement.close();
 		connection.close();

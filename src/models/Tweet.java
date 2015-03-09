@@ -22,6 +22,7 @@ public class Tweet implements Serializable {
 
 	public String[] definition = { "text", "idUser", "idTweetOrigin",
 			"idTweetParent" };
+	public String identifier = "idTweet";
 
 	public Tweet() {
 	}
@@ -114,7 +115,7 @@ public class Tweet implements Serializable {
 				this.setText(result.getString("text"));
 				this.setIdUser(result.getInt("idUser"));
 				this.setIdTweet(idTweet);
-				this.setRate(result.getInt("rate"));
+//				this.setRate(result.getInt("rate"));
 				return true;
 			} else
 				return false;

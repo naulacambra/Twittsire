@@ -132,6 +132,20 @@ public class tweetcontroller extends HttpServlet {
 			ArrayList<Tweet> comments = Tweet.getComments(Integer
 					.valueOf(request.getParameter("tweet")));
 			session.setAttribute("comments", comments);
+			break;
+		case "editTweet":
+			result.addPair("success", true);
+			try {
+				tempTweet = new Tweet();
+				tempTweet.loadTweet(Integer.valueOf(request
+						.getParameter("tweet")));
+				tempTweet.setText(request.getParameter("text"));
+				DAO database = new DAO();
+				database.updateObject(tempTweet);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
 		}
 		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
