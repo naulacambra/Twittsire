@@ -54,9 +54,10 @@
 		</div>
 		<span class="col-12 tweet_content"> <%=tweet.getText()%></span>
 		<div class="tweet_comments col-12">
-			<a href="" class="comment_tweet"><i class="fa fa-comment-o"></i></a>
+			<a href="" class="comment_tweet" data-idtweet="<%=tweet.getIdTweet()%>"><i class="fa fa-comment-o"></i></a>
 			<span>Show <%= tweet.getCommentCount() + " " + StringManager.singularOrPlural(tweet.getCommentCount(), "comment", "comments") %></span>
-			<textarea class="comment_area col-12" placeholder="Write here your comment" data-idTweet="<%=tweet.getIdTweet()%>"></textarea>
+			<textarea class="comment_area col-12" placeholder="Write here your comment" data-idtweet="<%=tweet.getIdTweet()%>"></textarea>
+			<div class="comments_list"></div>
 		</div>
 	</div>
 	<%

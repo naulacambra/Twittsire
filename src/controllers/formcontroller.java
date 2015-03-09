@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import models.User;
 import utils.BeanUtilities;
-import utils.DAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

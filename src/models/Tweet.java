@@ -20,7 +20,8 @@ public class Tweet implements Serializable {
 	private int rate;
 	private int commentCount;
 
-	public String[] definition = { "text", "idUser", "idTweetOrigin", "idTweetParent" };
+	public String[] definition = { "text", "idUser", "idTweetOrigin",
+			"idTweetParent" };
 
 	public Tweet() {
 	}
@@ -132,7 +133,8 @@ public class Tweet implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	/*Get all tweets for unregistered users*/
+
+	/* Get all tweets for unregistered users */
 	public static ArrayList<Tweet> getTweets() {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -153,7 +155,8 @@ public class Tweet implements Serializable {
 		}
 		return tweets;
 	}
-	/*Get tweets and their rates from the logged user*/
+
+	/* Get tweets and their rates from the logged user */
 	public static ArrayList<Tweet> getTweets(int idUser) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -162,13 +165,15 @@ public class Tweet implements Serializable {
 					.executeSelectSQL("SELECT t.*, u.username, r.rate, COUNT(c.idTweet) as comment_count "
 							+ "FROM Tweet t "
 							+ "LEFT JOIN User u "
-							+ "ON t.idUser = u.idUser " 
+							+ "ON t.idUser = u.idUser "
 							+ "LEFT JOIN Rating r "
-							+ "ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = "
+							+ idUser
+							+ " "
 							+ "LEFT JOIN tweet c "
 							+ "ON t.idTweet = c.idTweetParent "
 							+ "WHERE t.idTweetParent IS NULL "
-							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "		
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "
 							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
@@ -184,7 +189,8 @@ public class Tweet implements Serializable {
 		}
 		return tweets;
 	}
-	/*Get tweets from specific user*/
+
+	/* Get tweets from specific user */
 	public static ArrayList<Tweet> getTweets(String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 		try {
@@ -196,7 +202,9 @@ public class Tweet implements Serializable {
 							+ "ON t.idUser = u.idUser "
 							+ "LEFT JOIN tweet c "
 							+ "ON t.idTweet = c.idTweetParent "
-							+ "WHERE u.username = '" + username + "' "
+							+ "WHERE u.username = '"
+							+ username
+							+ "' "
 							+ "AND t.idTweetParent IS NULL "
 							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet))"
 							+ "ORDER BY t.created_at DESC");
@@ -214,6 +222,7 @@ public class Tweet implements Serializable {
 		}
 		return tweets;
 	}
+
 	/**/
 	public static ArrayList<Tweet> getTweets(int idUser, String username) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
@@ -221,16 +230,20 @@ public class Tweet implements Serializable {
 			DAO database = new DAO();
 			ResultSet result = database
 					.executeSelectSQL("SELECT t.*, u.username, r.rate, COUNT(c.idTweet) as comment_count "
-							+ "FROM Tweet t " 
+							+ "FROM Tweet t "
 							+ "LEFT JOIN User u "
-							+ "ON t.idUser = u.idUser " 
+							+ "ON t.idUser = u.idUser "
 							+ "LEFT JOIN Rating r "
-							+ "ON r.idTweet = t.idTweet AND r.idUser = " + idUser + " "
+							+ "ON r.idTweet = t.idTweet AND r.idUser = "
+							+ idUser
+							+ " "
 							+ "LEFT JOIN tweet c "
-							+ "ON t.idTweet = c.idTweetParent " 
-							+ "WHERE u.username = '" + username + "' "
+							+ "ON t.idTweet = c.idTweetParent "
+							+ "WHERE u.username = '"
+							+ username
+							+ "' "
 							+ "AND t.idTweetParent IS NULL "
-							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) " 
+							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "
 							+ "ORDER BY t.created_at DESC");
 			while (result.next()) {
 				User tempUser = new User();
@@ -262,7 +275,9 @@ public class Tweet implements Serializable {
 							+ "ON r.idTweet = t.idTweet AND r.idUser = f.idUserFollower "
 							+ "LEFT JOIN tweet c "
 							+ "ON t.idTweet = c.idTweetParent "
-							+ "WHERE f.idUserFollower = " + idUser + " "
+							+ "WHERE f.idUserFollower = "
+							+ idUser
+							+ " "
 							+ "AND t.idTweetParent IS NULL "
 							+ "GROUP BY (IFNULL(c.idTweetParent, t.idTweet)) "
 							+ "ORDER BY t.created_at DESC");
@@ -273,6 +288,33 @@ public class Tweet implements Serializable {
 						result.getInt("idUser"), tempUser,
 						result.getInt("idTweet"), result.getInt("rate"));
 				tempTweet.setCommentCount(result.getInt("comment_count"));
+				tweets.add(tempTweet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tweets;
+	}
+
+	public static ArrayList<Tweet> getComments(int idTweet) {
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+		try {
+			DAO database = new DAO();
+			ResultSet result = database
+					.executeSelectSQL("SELECT t.*, u.username, r.rate "
+							+ "FROM Tweet t "
+							+ "LEFT JOIN User u "
+							+ "ON u.idUser = t.idUser "
+							+ "LEFT JOIN Rating r "
+							+ "ON r.idTweet = t.idTweet AND r.idUser =  t.idUser "
+							+ "WHERE t.idTweetParent = " + idTweet + " "
+							+ "ORDER BY t.created_at DESC");
+			while (result.next()) {
+				User tempUser = new User();
+				tempUser.loadUser("username", result.getString("username"));
+				Tweet tempTweet = new Tweet(result.getString("text"),
+						result.getInt("idUser"), tempUser,
+						result.getInt("idTweet"), result.getInt("rate"));
 				tweets.add(tempTweet);
 			}
 		} catch (Exception e) {

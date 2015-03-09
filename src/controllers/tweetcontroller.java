@@ -126,9 +126,14 @@ public class tweetcontroller extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+			break;
+		case "loadComments":
+			result.addPair("success", true);
+			ArrayList<Tweet> comments = Tweet.getComments(Integer
+					.valueOf(request.getParameter("tweet")));
+			session.setAttribute("comments", comments);
 		}
 		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
 	}
-
 }

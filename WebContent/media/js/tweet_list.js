@@ -126,4 +126,27 @@ function bindTweetLinks() {
 					}
 				}
 			});
+
+	$('.comment_tweet').click(function(e) {
+		e.preventDefault();
+		var comments_list = $(this).parent().find('.comments_list');
+		/* Comment Tweet */
+		$.ajax({
+			url : "tweetcontroller",
+			type : "POST",
+			dataType : "json",
+			data : {
+				action : "loadComments",
+				tweet : $(this).data('idtweet')
+			},
+			success : function(response) {
+				response = parseResponse(response);
+				if (response.success)
+					$(comments_list).load('content/comments_list.jsp');
+			},
+			error : function(response) {
+				console.warn(response.responseText);
+			}
+		});
+	});
 }
