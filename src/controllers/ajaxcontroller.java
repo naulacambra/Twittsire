@@ -64,7 +64,7 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("exists",
 					User.mailExists(request.getParameter("data")));
 			break;
-		// Comprovar si s'esta fent login
+		// En cas de que s'estigui fent un login
 		case "login":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
@@ -95,7 +95,7 @@ public class ajaxcontroller extends HttpServlet {
 				session.setAttribute("user", user);
 			}
 			break;
-		// Comprovar si s'esta fent logout
+		// En cas de que s'estigui fent un logout
 		case "logout":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);

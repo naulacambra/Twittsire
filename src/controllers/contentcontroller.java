@@ -29,10 +29,11 @@ public class contentcontroller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//Cridem a la carpeta JSP list.jsp per mostrar la llista d'usuaris
+		//Cridem els arxius jsp de la carpeta "content", els quals escollirem un depenent de l'acció demanada, a "utils.js"
 		String content = (String)request.getParameter("content");
      	RequestDispatcher dispatcher = 
 					request.getRequestDispatcher(content);
+     	//Transferim el control a aquest dispatcher
 		 if (dispatcher != null) dispatcher.forward(request, response);
 	}
 

@@ -15,7 +15,7 @@ import utils.DAO;
 import utils.JSON;
 
 /**
- * Servlet implementation class ratingcontroller
+ * Aquest servlet s'encarrega de gestionar les crides per valorar els tweets
  */
 @WebServlet("/ratingcontroller")
 public class ratingcontroller extends HttpServlet {
@@ -35,6 +35,7 @@ public class ratingcontroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Si rebem una petició GET la processem com si fos POST
 		doPost(request, response);
 	}
 
@@ -52,18 +53,22 @@ public class ratingcontroller extends HttpServlet {
 		if (session != null) {
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
-				// Comprovem quina accio s'ens ha demanat amb la variable
-				// "action"
+				// Comprovem quina accio s'ens ha demanat amb la variable "action"
 				Rating rate = null;
 				switch (request.getParameter("action")) {
+				// En cas de que es vulgui valorar un tweet
 				case "rateTweet":
+					// Si hem arribat fins aqui, donem per bona la petició AJAX
 					result.addPair("success", true);
+					// Mirem si s'ha fet una valoració d'un tweet especific, d'un usuari concret
 					rate = new Rating(Integer.valueOf(request
 							.getParameter("tweet")), user.getIdUser(),
 							Integer.valueOf(request.getParameter("rate")));
+					// Si aquesta valoració existeix, actualitzem la valoració total del tweet
 					if (rate.exists()) {
 						rate.update();
 					} else {
+						// Si no existeix aquesta valoració, la creem de nova 
 						DAO database;
 						try {
 							database = new DAO();
@@ -73,22 +78,29 @@ public class ratingcontroller extends HttpServlet {
 						}
 					}
 					break;
+				// En cas de que es vulgui deixar de valorar un tweet (unlike tweet)
 				case "unrateTweet":
+					// Si hem arribat fins aqui, donem per bona la petició AJAX
 					result.addPair("success", true);
+					// Mirem si s'ha fet una valoració d'un tweet especific, d'un usuari concret
 					rate = new Rating(Integer.valueOf(request
 							.getParameter("tweet")), user.getIdUser(),
 							Integer.valueOf(request.getParameter("rate")));
+					// Si aquesta valoració existeix, la esborrem
 					if (rate.exists()) {
 						rate.delete();
 					}
 					break;
 				}
 			} else {
+				// Si arribem aqui, la petició AJAX no s'ha processat correctament
 				result.addPair("success", false);
 			}
 		} else {
+			// Si arribem aqui, la petició AJAX no s'ha processat correctament
 			result.addPair("success", false);
 		}
+		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
 	}
 

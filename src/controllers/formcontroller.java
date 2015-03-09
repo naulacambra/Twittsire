@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class formcontroller
+ * Aquest servlet s'encarrega de gestionar el registre d'un usuari
  */
 @WebServlet("/formcontroller")
 public class formcontroller extends HttpServlet {
