@@ -56,6 +56,11 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("exists",
 					User.usernameExists(request.getParameter("data")));
 			break;
+		case "checkUsernameAndMail":
+			result.addPair("success", true);
+			result.addPair("exists",
+					User.usernameExists(request.getParameter("value")) || User.mailExists(request.getParameter("value")));
+			break;
 		// Comprovar si ja existeix un mail
 		case "checkMail":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX

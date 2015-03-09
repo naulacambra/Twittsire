@@ -21,8 +21,9 @@
 <script type="text/javascript" src="media/js/jquery-ui.min.js"></script>
 <!-- Validate.js -->
 <script type="text/javascript" src="media/js/jquery.validate.js"></script>
-<!-- Utils JS -->
+<!-- Utils -->
 <script type="text/javascript" src="media/js/utils.js"></script>
+<script type="text/javascript" src="media/js/form.js"></script>
 <!-- Content loader JS -->
 <script type="text/javascript" src="media/js/content.js"></script>
 <!-- Index JS -->
