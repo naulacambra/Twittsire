@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 			},
 			success : function(response) {
 				response = parseResponse(response);
-				if(!response.exists){
+				if(response.exists){
 					$(error_label).show();
 				}
 			},

@@ -1,4 +1,11 @@
 /* Funció per poder tractar correctament la resposta de les cridades AJAX */
+function loadGlobal(){
+	checkDatabase();
+	loadFollowers();
+	loadFollowings();
+	loadTweets();
+}
+
 function parseResponse(response) {
 	count = 0;
 	new_response = {};

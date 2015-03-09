@@ -97,6 +97,6 @@ INSERT INTO RoleCapabilities (`idRole`, `idCapability`) VALUES (2, 4);
 /*Guest Capability*/
 INSERT INTO RoleCapabilities (`idRole`, `idCapability`) VALUES (3, 4);
 /*Administrator User*/
-INSERT INTO User(`name`, `surname`, `username`, `mail`, `password`, `idRole`) VALUES("Super", "Admin",  "SuperAdmin", "admin@root.com", "rootTwittsire", 1);
+INSERT INTO User(`name`, `surname`, `username`, `mail`, `password`, `idRole`) VALUES("Super", "Admin",  "SuperAdmin", "admin@root.com", "579576fdd5f6c700b3fbd7cd5e564240", 1);
 /*Example User*/
-INSERT INTO User(`name`, `surname`, `username`, `mail`, `password`, `idRole`) VALUES("Gastly", "Haunter Gengar",  "Ghost", "ghg@gmail.com", "pokemons", 2);
+INSERT INTO User(`name`, `surname`, `username`, `mail`, `password`, `idRole`) VALUES("Gastly", "Haunter Gengar",  "Ghost", "ghg@gmail.com", "806a2494347cf2ff4cc0d2cc5e718bb6", 2);
