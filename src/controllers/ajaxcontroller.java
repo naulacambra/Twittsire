@@ -129,7 +129,6 @@ public class ajaxcontroller extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		default:
 		}
 		// Escrivim en la resposta les dades en format JSON
