@@ -57,12 +57,17 @@ public class DAO {
 								"get" + StringManager.capitalize(definition[i]))
 						.getReturnType().getSimpleName()) {
 				case "int":
-					values[i] = clazz
-							.getMethod(
-									"get"
-											+ StringManager
-													.capitalize(definition[i]))
-							.invoke(o).toString();
+				case "Integer":
+					try {
+						values[i] = clazz
+								.getMethod(
+										"get"
+												+ StringManager
+														.capitalize(definition[i]))
+								.invoke(o).toString();
+					} catch (java.lang.NullPointerException e) {
+						values[i] = "null";
+					}
 					break;
 				case "boolean":
 					values[i] = Boolean.valueOf(clazz

@@ -13,15 +13,16 @@ public class Tweet implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String text;
 	private int idUser;
+	private Integer idTweetOrigin;
+	private Integer idTweetParent;
 	private User user;
 	private int idTweet;
 	private int rate;
 	private int commentCount;
 
-	public String[] definition = { "text", "idUser" };
+	public String[] definition = { "text", "idUser", "idTweetOrigin", "idTweetParent" };
 
 	public Tweet() {
-
 	}
 
 	public Tweet(String text, int idUser) {
@@ -84,6 +85,22 @@ public class Tweet implements Serializable {
 
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
+	}
+
+	public Integer getIdTweetOrigin() {
+		return idTweetOrigin;
+	}
+
+	public void setIdTweetOrigin(Integer idTweetOrigin) {
+		this.idTweetOrigin = idTweetOrigin;
+	}
+
+	public Integer getIdTweetParent() {
+		return idTweetParent;
+	}
+
+	public void setIdTweetParent(Integer idTweetParent) {
+		this.idTweetParent = idTweetParent;
 	}
 
 	public boolean loadTweet(int idTweet) {

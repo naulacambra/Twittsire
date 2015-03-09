@@ -98,9 +98,12 @@ header .header_button:hover i {
 	padding: 10px;
 }
 
-#tweet_list .tweet .tweet_content .comment_tweet{
-    color: white;
-	
+#tweet_list .tweet .tweet_comments .comment_tweet{
+    color: #000000;
+}
+
+#tweet_list .tweet .tweet_comments .comment_area{
+	resize: none;
 }
 /*!TWEET LIST*/
 label.error, label.error_label {

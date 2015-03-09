@@ -93,4 +93,37 @@ function bindTweetLinks() {
 			}
 		});
 	});
+
+	$('.comment_area').keypress(
+			function(e) {
+				var code = e.keyCode || e.which
+				if (code == 13) {
+					e.preventDefault();
+					if ($(this).val() != '') {
+						var current_scoope = $('.header_button.selected').data(
+								'scoope');
+						var comment_area = $(this);
+						$(comment_area).attr("disabled", "disabled");
+						/* Comment Tweet */
+						$.ajax({
+							url : "tweetcontroller",
+							type : "POST",
+							dataType : "json",
+							data : {
+								action : "commentTweet",
+								tweet : $(comment_area).data('idtweet'),
+								text : $(comment_area).val()
+							},
+							success : function(response) {
+								response = parseResponse(response);
+								loadTweets(current_scoope);
+								/* load comments */
+							},
+							error : function(response) {
+								console.warn(response.responseText);
+							}
+						});
+					}
+				}
+			});
 }

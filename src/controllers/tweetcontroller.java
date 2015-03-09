@@ -50,6 +50,7 @@ public class tweetcontroller extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
+		User user = (User) session.getAttribute("user");
 		Tweet tempTweet = new Tweet();
 		// Comprovem quina accio s'ens ha demanat amb la variable "action"
 		switch (request.getParameter("action")) {
@@ -57,7 +58,6 @@ public class tweetcontroller extends HttpServlet {
 			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 			ArrayList<Follow> followings = new ArrayList<Follow>();
 			result.addPair("success", true);
-			User user = (User) session.getAttribute("user");
 			if (user != null) {
 				followings = Follow.getFollowings(user.getIdUser());
 			}
@@ -111,6 +111,21 @@ public class tweetcontroller extends HttpServlet {
 			tempTweet.loadTweet(Integer.valueOf(request.getParameter("tweet")));
 			tempTweet.delete();
 			break;
+		case "commentTweet":
+			if (user != null) {
+				try {
+					result.addPair("success", true);
+					tempTweet = new Tweet();
+					tempTweet.setIdUser(user.getIdUser());
+					tempTweet.setText(request.getParameter("text"));
+					tempTweet.setIdTweetParent(Integer.valueOf(request
+							.getParameter("tweet")));
+					DAO database = new DAO();
+					database.saveObject(tempTweet);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		// Escrivim en la resposta les dades en format JSON
 		response.getWriter().write(result.toString());
