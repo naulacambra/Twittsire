@@ -16,8 +16,7 @@ jQuery(document).ready(function($) {
 						$(container).load('contentcontroller', {
 							content : $(form).data('content')
 						});
-						loadFollowers();
-						loadFollowings();
+						loadGlobal();
 					}
 				} else {
 					console.warn("Something went wrong");
@@ -47,6 +46,34 @@ jQuery(document).ready(function($) {
 					$(container).load('contentcontroller', {
 						content : 'content/login.jsp'
 					});
+				} else {
+					console.warn("Something went wrong");
+				}
+			},
+			error : function(response) {
+				console.log("error");
+				console.log(response.responseText);
+			}
+		});
+	});
+	
+	$('.register_form').submit(function(e){
+		e.preventDefault();
+		var container = $(this).parents('.container');
+		var form = $(this);
+		$.ajax({
+			url : "ajaxcontroller",
+			type : "POST",
+			dataType : "json",
+			data : $(form).serialize(),
+			success : function(response) {
+				response = parseResponse(response);
+				/* Comprovem si la cridada ajax ha anat bé */
+				if (response.success) {
+					$(container).load('contentcontroller', {
+						content : 'content/login.jsp'
+					});
+					loadGlobal();
 				} else {
 					console.warn("Something went wrong");
 				}

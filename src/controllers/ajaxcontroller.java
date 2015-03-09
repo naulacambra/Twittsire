@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.User;
+import utils.DAO;
 import utils.JSON;
 
 /**
@@ -46,6 +47,7 @@ public class ajaxcontroller extends HttpServlet {
 		// Definim les capceleres per definir el format de resposta
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		HttpSession session = null;
 		// Comprovem quina accio s'ens ha demanat amb la variable "action"
 		switch (request.getParameter("action")) {
 		// Comprovar si ja existeix un nom d'usuari
@@ -54,7 +56,14 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("success", true);
 			// Comprovem si el nom d'usuari donat existeix
 			result.addPair("exists",
-					User.usernameExists(request.getParameter("data")));
+					User.usernameExists(request.getParameter("value")));
+			break;
+		case "checkUsernameAndMail":
+			result.addPair("success", true);
+			result.addPair(
+					"exists",
+					!User.usernameExists(request.getParameter("value"))
+							&& !User.mailExists(request.getParameter("value")));
 			break;
 		// Comprovar si ja existeix un mail
 		case "checkMail":
@@ -62,7 +71,7 @@ public class ajaxcontroller extends HttpServlet {
 			result.addPair("success", true);
 			// Comprovem si el mail donat ja està registrat
 			result.addPair("exists",
-					User.mailExists(request.getParameter("data")));
+					User.mailExists(request.getParameter("value")));
 			break;
 		// En cas de que s'estigui fent un login
 		case "login":
@@ -79,10 +88,10 @@ public class ajaxcontroller extends HttpServlet {
 									request.getParameter("password")));
 			if (Boolean.valueOf(result.getValue("login"))) {
 				User user = new User();
-				//Si existeix l'email, carreguem les seves dades
+				// Si existeix l'email, carreguem les seves dades
 				if (User.mailExists(request.getParameter("username_mail")))
 					user.loadUser("mail", request.getParameter("username_mail"));
-				//Si existeix el nom d'usuari, carreguem les seves dades
+				// Si existeix el nom d'usuari, carreguem les seves dades
 				else if (User.usernameExists(request
 						.getParameter("username_mail")))
 					user.loadUser("username",
@@ -90,8 +99,8 @@ public class ajaxcontroller extends HttpServlet {
 				else
 					break;
 
-				// Carreguem la sessió 
-				HttpSession session = request.getSession();
+				// Carreguem la sessió
+				session = request.getSession();
 				session.setAttribute("user", user);
 			}
 			break;
@@ -99,11 +108,27 @@ public class ajaxcontroller extends HttpServlet {
 		case "logout":
 			// Si hem arribat fins aqui, donem per bona la petició AJAX
 			result.addPair("success", true);
-			System.out.println("logging out!");
 			// Tanquem la sessió
-			HttpSession session = request.getSession(false);
+			session = request.getSession(false);
 			session.invalidate();
 			break;
+		case "register":
+			try {
+				// Si hem arribat fins aqui, donem per bona la petició AJAX
+				result.addPair("success", true);
+				User tempUser = new User();
+				tempUser.setMail(request.getParameter("mail"));
+				tempUser.setUsername(request.getParameter("username"));
+				tempUser.setName(request.getParameter("name"));
+				tempUser.setSurname(request.getParameter("surname"));
+				tempUser.setPassword(request.getParameter("password"));
+				DAO database = new DAO();
+				database.saveObject(tempUser);
+				session = request.getSession();
+				session.setAttribute("user", tempUser);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		default:
 		}
 		// Escrivim en la resposta les dades en format JSON
